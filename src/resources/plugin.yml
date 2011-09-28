@@ -1,0 +1,25 @@
+name: FunCommands
+main: de.Lathanael.FunCommands.FunCommands
+version: ${project.version} (BUILD ${git.build.time})
+auhor: Lathanael
+depend: [AdminCmd]
+description: >
+             Fun commands for AdminCmd.
+
+commands:
+    ac_slap:
+        description: Slaps the provided player, flags determine how hard.
+        aliases: [slap]
+        usage: /<command> <-flags> [player]
+    ac_rocket:
+        description: Shoots the provided player high into the air.
+        aliases: [rocket]
+        usage: /<command> <-flags> [player]
+    ac_attaint:
+        description: Attaint the player by changing his Displayname.
+        aliases: [attaint]
+        usage: /<command> [player] [DispName]
+    ac_entomb:
+        description: Entomb a player in a Cube of defined material.
+        aliases: [entomb]
+        usage: /<command> [player] <material>
