@@ -1,9 +1,12 @@
-package de.Lathanael.FunCommands;
+package de.Lathanael.Listeners;
 
 import org.bukkit.block.BlockState;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.PlayerListener;
+
+import de.Lathanael.FunCommands.FunCommands;
+import de.Lathanael.Tools.BlocksOld;
 
 public class FCEntityListener extends PlayerListener {
 

@@ -15,7 +15,7 @@
  * along with FunCommands.  If not, see <http://www.gnu.org/licenses/>.
  ************************************************************************/
 
-package de.Lathanael.FunCommands;
+package de.Lathanael.Commands;
 
 import java.util.Random;
 

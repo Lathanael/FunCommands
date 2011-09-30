@@ -15,12 +15,13 @@
  * along with FunCommands.  If not, see <http://www.gnu.org/licenses/>.
  ************************************************************************/
 
-package de.Lathanael.FunCommands;
+package de.Lathanael.Tools;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.command.CommandSender;
+
 
 /**
  * @author Lathanael (aka Philippe Leipold)
