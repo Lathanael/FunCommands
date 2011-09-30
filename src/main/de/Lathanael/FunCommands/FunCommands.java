@@ -17,6 +17,10 @@
 
 package de.Lathanael.FunCommands;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.PluginDescriptionFile;
 
@@ -32,6 +36,9 @@ import be.Balor.bukkit.AdminCmd.AbstractAdminCmdPlugin;
  *
  */
 public class FunCommands extends AbstractAdminCmdPlugin {
+
+	public static HashMap<String, BlocksOld> blockStates = new HashMap<String, BlocksOld>();
+	public static List<String> players = new ArrayList<String>();
 
 	/**
 	 * @param name

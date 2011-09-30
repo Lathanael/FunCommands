@@ -19,6 +19,7 @@
   			<directory>${basedir}/src/resources/</directory>
   			<includes>
   				<include>plugin.yml</include>
+  				<include>**/*.properties</include>
   			</includes>
   		</resource>
   	</resources>

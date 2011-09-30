@@ -17,39 +17,29 @@
 
 package de.Lathanael.FunCommands;
 
-import java.util.Random;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-
-import be.Balor.Manager.Commands.CommandArgs;
-import be.Balor.Manager.Commands.CoreCommand;
-import be.Balor.Tools.Utils;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockState;
 
 /**
  * @author Lathanael (aka Philippe Leipold)
  *
  */
-public class Slap extends CoreCommand {
+public class BlocksOld {
 
-	public Slap() {
-		super("ac_slap", "admincmd.fun.slap", "FunCommands");
+	private List<BlockState> blocks = new ArrayList<BlockState>();
+
+	public BlocksOld () {
+
 	}
 
-	@Override
-	public void execute(CommandSender sender, CommandArgs args) {
-		Random random = new Random();
-		random.nextInt(10);
-		Player target;
-
-		target = Utils.getUser(sender, args, permNode, 1, true);
-		if (target == null)
-			return;
+	public void addBlock(Block block) {
+		blocks.add(block.getState());
 	}
 
-
-	@Override
-	public boolean argsCheck(String... args) {
-		return args != null && args.length >= 1;
+	public List<BlockState> getStates() {
+		return blocks;
 	}
 }

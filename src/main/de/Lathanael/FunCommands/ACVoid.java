@@ -1,3 +1,20 @@
+/************************************************************************
+ * This file is part of FunCommands.
+ *
+ * FunCommands is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * ExamplePlugin is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with FunCommands.  If not, see <http://www.gnu.org/licenses/>.
+ ************************************************************************/
+
 package de.Lathanael.FunCommands;
 
 import org.bukkit.Location;
@@ -6,8 +23,14 @@ import org.bukkit.entity.Player;
 
 import be.Balor.Manager.Commands.CommandArgs;
 import be.Balor.Manager.Commands.CoreCommand;
+import be.Balor.Tools.MaterialContainer;
 import be.Balor.Tools.Utils;
+import be.Balor.bukkit.AdminCmd.ACHelper;
 
+/**
+ * @author Lathanael (aka Philippe Leipold)
+ *
+ */
 public class ACVoid extends CoreCommand {
 
 	public ACVoid() {
@@ -17,11 +40,28 @@ public class ACVoid extends CoreCommand {
 	@Override
 	public void execute(CommandSender sender, CommandArgs args) {
 		Player target;
+		MaterialContainer mat = null;
+		BlocksOld states = new BlocksOld();
 
+		mat = ACHelper.getInstance().checkMaterial(sender, "air");
 		target = Utils.getUser(sender, args, permNode, 1, true);
 		if (target == null)
 			return;
+		FunCommands.players.add(target.getName());
 		Location loc = target.getLocation();
+		int y = loc.getBlock().getY();
+		for (; y >= 0; y--) {
+			Utilities.changeBlock(sender, loc, mat.getMaterial(), states, 0, y, 0);
+			Utilities.changeBlock(sender, loc, mat.getMaterial(), states, 1, y, 0);
+			Utilities.changeBlock(sender, loc, mat.getMaterial(), states, 0, y, 1);
+			Utilities.changeBlock(sender, loc, mat.getMaterial(), states, 1, y, 1);
+			Utilities.changeBlock(sender, loc, mat.getMaterial(), states, -1, y, 0);
+			Utilities.changeBlock(sender, loc, mat.getMaterial(), states, 0, y, -1);
+			Utilities.changeBlock(sender, loc, mat.getMaterial(), states, -1, y, 1);
+			Utilities.changeBlock(sender, loc, mat.getMaterial(), states, 1, y, -1);
+			Utilities.changeBlock(sender, loc, mat.getMaterial(), states, -1, y, -1);
+		}
+		FunCommands.blockStates.put(target.getName(), states);
 	}
 
 

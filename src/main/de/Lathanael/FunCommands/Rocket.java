@@ -31,7 +31,6 @@ import be.Balor.Tools.Utils;
  * @author Lathanael (aka Philippe Leipold)
  *
  */
-
 public class Rocket extends CoreCommand {
 
 	public Rocket() {

@@ -17,39 +17,36 @@
 
 package de.Lathanael.FunCommands;
 
-import java.util.Random;
-
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-
-import be.Balor.Manager.Commands.CommandArgs;
-import be.Balor.Manager.Commands.CoreCommand;
-import be.Balor.Tools.Utils;
 
 /**
  * @author Lathanael (aka Philippe Leipold)
  *
  */
-public class Slap extends CoreCommand {
+public class Utilities {
 
-	public Slap() {
-		super("ac_slap", "admincmd.fun.slap", "FunCommands");
-	}
-
-	@Override
-	public void execute(CommandSender sender, CommandArgs args) {
-		Random random = new Random();
-		random.nextInt(10);
-		Player target;
-
-		target = Utils.getUser(sender, args, permNode, 1, true);
-		if (target == null)
+	/**
+	 * Change the block at a location(+shift) into a given material
+	 *
+	 * @author Lathanael
+	 * @param loc The location of the block to be changed
+	 * @param mat The material the block should be changed to
+	 * @param x Shift in x direction to modify the location
+	 * @param y Shift in y direction to modify the location
+	 * @param z Shift in z direction to modify the location
+	 * @param states The states list where the old BlockState will be saved in.
+	 */
+	public static void changeBlock (CommandSender sender, Location loc, Material mat, BlocksOld states, int x, int y, int z) {
+		Block block = null;
+		block = loc.getBlock().getRelative(x, y, z);
+		if (block == null) {
+			sender.sendMessage("Invalid location!");
 			return;
-	}
-
-
-	@Override
-	public boolean argsCheck(String... args) {
-		return args != null && args.length >= 1;
+		}
+		states.addBlock(block);
+		block.setType(mat);
 	}
 }
