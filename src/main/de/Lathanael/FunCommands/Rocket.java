@@ -47,11 +47,14 @@ public class Rocket extends CoreCommand {
 		HashMap<String, String> replace = new HashMap<String, String>();
 		Random random = new Random();
 		random.nextInt(10);
-		if (Utils.isPlayer(sender, false)) {
+		replace.put("target", target.getName());
+		if (Utils.isPlayer(sender, false))
+			replace.put("sender", sender.getName());
+		else
+			replace.put("sender", "Server Admin");
 
-		} else {
-
-		}
+		Utils.sI18n(target, "rocketTarget", replace);
+		Utils.sI18n(sender, "rocketSender", replace);
 	}
 
 	@Override

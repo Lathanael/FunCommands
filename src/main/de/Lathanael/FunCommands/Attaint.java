@@ -55,10 +55,10 @@ public class Attaint extends CoreCommand {
 
 		target.setDisplayName(args.getString(2));
 		if (!target.equals(sender)) {
-			Utils.sI18n(target, "attainTarget", replace);
+			Utils.sI18n(target, "attaintTarget", replace);
 			Utils.sI18n(sender, "attaintSender", replace);
 		} else {
-			Utils.sI18n(sender, "attainYourself", replace);
+			Utils.sI18n(sender, "attaintYourself", replace);
 		}
 	}
 

@@ -17,6 +17,8 @@
 
 package de.Lathanael.FunCommands;
 
+import java.util.HashMap;
+
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -47,7 +49,7 @@ public class ACVoid extends CoreCommand {
 		target = Utils.getUser(sender, args, permNode, 1, true);
 		if (target == null)
 			return;
-		FunCommands.players.add(target.getName());
+		FunCommands.players.add(target);
 		Location loc = target.getLocation();
 		int y = loc.getBlock().getY();
 		for (; y >= 0; y--) {
@@ -61,7 +63,20 @@ public class ACVoid extends CoreCommand {
 			Utilities.changeBlock(sender, loc, mat.getMaterial(), states, 1, y, -1);
 			Utilities.changeBlock(sender, loc, mat.getMaterial(), states, -1, y, -1);
 		}
-		FunCommands.blockStates.put(target.getName(), states);
+		FunCommands.blockStates.put(target, states);
+		FunCommands.players.add(target);
+		HashMap<String, String> replace = new HashMap<String, String>();
+		replace.put("target", target.getName());
+		if (Utils.isPlayer(sender, false))
+			replace.put("sender", sender.getName());
+		else
+			replace.put("sender", "Server Admin");
+		if (!target.equals(sender)) {
+			Utils.sI18n(target, "voidTarget", replace);
+			Utils.sI18n(sender, "voidSender", replace);
+		} else {
+			Utils.sI18n(sender, "voidYourself", replace);
+		}
 	}
 
 

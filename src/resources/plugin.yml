@@ -20,6 +20,10 @@ commands:
         aliases: [attaint]
         usage: /<command> [player] [DispName]
     ac_entomb:
-        description: Entomb a player in a Cube of defined material.
+        description: Entomb a player in a cube of defined material, the flag -u removes the cube.
         aliases: [entomb]
-        usage: /<command> [player] <material>
+        usage: /<command> <-flag> [player] <material>
+    ac_void:
+        description: Drop a player into the VOID, after his death the hole will be closed.
+        aliases: [void]
+        usage: /<command> [player]

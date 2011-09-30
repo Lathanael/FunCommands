@@ -17,6 +17,8 @@
 
 package de.Lathanael.FunCommands;
 
+import java.util.HashMap;
+
 import org.bukkit.Location;
 import org.bukkit.block.BlockState;
 import org.bukkit.command.CommandSender;
@@ -50,7 +52,7 @@ public class Entomb extends CoreCommand {
 		if (target == null)
 			return;
 		if (args.hasFlag('u')) {
-			undoEntomb(FunCommands.blockStates.get(target.getName()));
+			undoEntomb(FunCommands.blockStates.get(target));
 		}
 		if (args.length >= 2)
 			mat = ACHelper.getInstance().checkMaterial(sender, args.getString(1));
@@ -65,7 +67,19 @@ public class Entomb extends CoreCommand {
 		Utilities.changeBlock(sender, loc, mat.getMaterial(), states, 0, 1, -1);
 		Utilities.changeBlock(sender, loc, mat.getMaterial(), states, 0, -1, 0);
 		Utilities.changeBlock(sender, loc, mat.getMaterial(), states, 0, 2, 0);
-		FunCommands.blockStates.put(target.getName(), states);
+		FunCommands.blockStates.put(target, states);
+		HashMap<String, String> replace = new HashMap<String, String>();
+		replace.put("target", target.getName());
+		if (Utils.isPlayer(sender, false))
+			replace.put("sender", sender.getName());
+		else
+			replace.put("sender", "Server Admin");
+		if (!target.equals(sender)) {
+			Utils.sI18n(target, "entombTarget", replace);
+			Utils.sI18n(sender, "entombSender", replace);
+		} else {
+			Utils.sI18n(sender, "entombYourself", replace);
+		}
 	}
 
 

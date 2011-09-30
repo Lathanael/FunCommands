@@ -20,10 +20,12 @@ package de.Lathanael.FunCommands;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
+import org.bukkit.event.Event.Priority;
+import org.bukkit.event.Event.Type;
 import org.bukkit.plugin.PluginDescriptionFile;
-
+import org.bukkit.plugin.PluginManager;
 import be.Balor.Manager.LocaleManager;
 import be.Balor.Manager.Permissions.PermParent;
 import be.Balor.Tools.Utils;
@@ -37,8 +39,9 @@ import be.Balor.bukkit.AdminCmd.AbstractAdminCmdPlugin;
  */
 public class FunCommands extends AbstractAdminCmdPlugin {
 
-	public static HashMap<String, BlocksOld> blockStates = new HashMap<String, BlocksOld>();
-	public static List<String> players = new ArrayList<String>();
+	public static HashMap<Player, BlocksOld> blockStates = new HashMap<Player, BlocksOld>();
+	public static List<Player> players = new ArrayList<Player>();
+	public static FCEntityListener fcel;
 
 	/**
 	 * @param name
@@ -64,9 +67,9 @@ public class FunCommands extends AbstractAdminCmdPlugin {
 
 	@Override
 	protected void setDefaultLocale() {
-		Utils.addLocale("slap", ChatColor.DARK_AQUA + "You have slapped " + ChatColor.GOLD
+		Utils.addLocale("slapSender", ChatColor.DARK_AQUA + "You have slapped " + ChatColor.GOLD
 				+ "%target" + ChatColor.DARK_AQUA + "!");
-		Utils.addLocale("slapped", ChatColor.DARK_AQUA + "You have been slapped by " + ChatColor.GOLD
+		Utils.addLocale("slapTarget", ChatColor.DARK_AQUA + "You have been slapped by " + ChatColor.GOLD
 				+ "%sender" + ChatColor.DARK_AQUA + "!");
 		Utils.addLocale("attaintYourself", ChatColor.DARK_AQUA + "You changed your Displayname to:" + ChatColor.DARK_RED
 				+ " %name");
@@ -74,12 +77,30 @@ public class FunCommands extends AbstractAdminCmdPlugin {
 				+ " %sender" + ChatColor.DARK_AQUA + " to:" + ChatColor.DARK_RED + "%name");
 		Utils.addLocale("attaintSender", ChatColor.DARK_AQUA + "You have changed the Displayname of" + ChatColor.GOLD
 				+ " %target" + ChatColor.DARK_AQUA + " to:" + ChatColor.DARK_RED +" %name");
+		Utils.addLocale("entombSender", ChatColor.DARK_AQUA + "You have entombed " + ChatColor.GOLD
+				+ "%target" + ChatColor.DARK_AQUA + "!");
+		Utils.addLocale("entombTarget", ChatColor.DARK_AQUA + "You have been entombed by " + ChatColor.GOLD
+				+ "%sender" + ChatColor.DARK_AQUA + "!");
+		Utils.addLocale("entombYourself", ChatColor.DARK_AQUA + "You have entombed yourself!");
+		Utils.addLocale("voidSender", ChatColor.DARK_AQUA + "You have dropped " + ChatColor.GOLD
+				+ "%target" + ChatColor.DARK_AQUA + " into the " + ChatColor.RED +"VOID" + ChatColor.DARK_AQUA + "!");
+		Utils.addLocale("voidTarget", ChatColor.DARK_AQUA + "You have been dropped into the " + ChatColor.RED + "VOID "
+				+ ChatColor.DARK_AQUA + "by " + ChatColor.GOLD + "%sender" + ChatColor.DARK_AQUA + "!");
+		Utils.addLocale("voidYourself", ChatColor.DARK_AQUA + "You have dropped yourself into the " + ChatColor.RED + "VOID"
+				+ ChatColor.DARK_AQUA + "!");
+		Utils.addLocale("rocketTarget", ChatColor.DARK_AQUA + "You have slapped " + ChatColor.GOLD
+				+ "%target" + ChatColor.DARK_AQUA + "!");
+		Utils.addLocale("rocketSender", ChatColor.DARK_AQUA + "You have been slapped by " + ChatColor.GOLD
+				+ "%sender" + ChatColor.DARK_AQUA + "!");
 		LocaleManager.getInstance().save();
 	}
 
 	@Override
 	public void onEnable() {
 		super.onEnable();
+		fcel = new FCEntityListener(this);
+		PluginManager pm = getServer().getPluginManager();
+		pm.registerEvent(Type.ENTITY_DEATH, fcel, Priority.Monitor, this);
 		PluginDescriptionFile pdfFile = this.getDescription();
 		permissionLinker.registerAllPermParent();
 		System.out.print("[" + pdfFile.getName() +"] Enabled. (Version " + pdfFile.getVersion() + ")");
