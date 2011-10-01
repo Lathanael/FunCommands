@@ -18,10 +18,9 @@
 package de.Lathanael.Commands;
 
 import java.util.HashMap;
-import java.util.Random;
-
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.util.Vector;
 
 import be.Balor.Manager.Commands.CommandArgs;
 import be.Balor.Manager.Commands.CoreCommand;
@@ -37,6 +36,13 @@ public class Rocket extends CoreCommand {
 		super("ac_rocket", "admincmd.fun.rocket", "FunCommands");
 	}
 
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see
+	 * be.Balor.Manager.ACCommands#execute(org.bukkit.command.CommandSender,
+	 * java.lang.String[])
+	 */
 	@Override
 	public void execute(CommandSender sender, CommandArgs args) {
 		Player target;
@@ -45,18 +51,29 @@ public class Rocket extends CoreCommand {
 		if (target == null)
 			return;
 		HashMap<String, String> replace = new HashMap<String, String>();
-		Random random = new Random();
-		random.nextInt(10);
 		replace.put("target", target.getName());
 		if (Utils.isPlayer(sender, false))
 			replace.put("sender", sender.getName());
 		else
 			replace.put("sender", "Server Admin");
+		if (args.hasFlag('h'))
+			target.setVelocity(new Vector(0, 5, 0));
+		else
+			target.setVelocity(new Vector(0, 1.5, 0));
+		if (!target.equals(sender)) {
+			Utils.sI18n(target, "rocketTarget", replace);
+			Utils.sI18n(sender, "rocketSender", replace);
+		} else {
+			Utils.sI18n(sender, "rocketYourself");
+		}
 
-		Utils.sI18n(target, "rocketTarget", replace);
-		Utils.sI18n(sender, "rocketSender", replace);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see be.Balor.Manager.ACCommands#argsCheck(java.lang.String[])
+	 */
 	@Override
 	public boolean argsCheck(String... args) {
 		return args != null && args.length >= 1;

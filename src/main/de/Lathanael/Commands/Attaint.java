@@ -40,20 +40,26 @@ public class Attaint extends CoreCommand {
 	public void execute(CommandSender sender, CommandArgs args) {
 		Player target;
 
-		target = Utils.getUser(sender, args, permNode, 1, true);
+		target = Utils.getUser(sender, args, permNode, 0, true);
 		if (target == null)
 			return;
+		HashMap<String, String> replace = new HashMap<String, String>();
+		if (args.hasFlag('c')) {
+			replace.put("name", target.getDisplayName());
+			Utils.sI18n(sender, "attaintShowName", replace);
+			return;
+		}
 		if (!Utils.checkImmunity(sender, args, 0))
 			return;
-		HashMap<String, String> replace = new HashMap<String, String>();
+
 		replace.put("target", target.getName());
-		replace.put("name", args.getString(2));
+		replace.put("name", args.getString(1));
 		if (Utils.isPlayer(sender, false))
 			replace.put("sender", sender.getName());
 		else
 			replace.put("sender", "Server Admin");
 
-		target.setDisplayName(args.getString(2));
+		target.setDisplayName(args.getString(1));
 		if (!target.equals(sender)) {
 			Utils.sI18n(target, "attaintTarget", replace);
 			Utils.sI18n(sender, "attaintSender", replace);

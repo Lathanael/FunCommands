@@ -42,7 +42,7 @@ public class Slap extends CoreCommand {
 		random.nextInt(10);
 		Player target;
 
-		target = Utils.getUser(sender, args, permNode, 1, true);
+		target = Utils.getUser(sender, args, permNode, 0, true);
 		if (target == null)
 			return;
 	}

@@ -20,6 +20,7 @@ package de.Lathanael.Commands;
 import java.util.HashMap;
 
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -29,6 +30,7 @@ import de.Lathanael.Tools.Utilities;
 
 import be.Balor.Manager.Commands.CommandArgs;
 import be.Balor.Manager.Commands.CoreCommand;
+import be.Balor.Tools.ACLogger;
 import be.Balor.Tools.MaterialContainer;
 import be.Balor.Tools.Utils;
 import be.Balor.bukkit.AdminCmd.ACHelper;
@@ -46,26 +48,25 @@ public class ACVoid extends CoreCommand {
 	@Override
 	public void execute(CommandSender sender, CommandArgs args) {
 		Player target;
-		MaterialContainer mat = null;
+		Material mat = null;
 		BlocksOld states = new BlocksOld();
 
-		mat = ACHelper.getInstance().checkMaterial(sender, "air");
-		target = Utils.getUser(sender, args, permNode, 1, true);
+		mat = Material.AIR;
+		target = Utils.getUser(sender, args, permNode, 0, true);
 		if (target == null)
 			return;
 		FunCommands.players.add(target);
 		Location loc = target.getLocation();
-		int y = loc.getBlock().getY();
-		for (; y >= 0; y--) {
-			Utilities.changeBlock(sender, loc, mat.getMaterial(), states, 0, y, 0);
-			Utilities.changeBlock(sender, loc, mat.getMaterial(), states, 1, y, 0);
-			Utilities.changeBlock(sender, loc, mat.getMaterial(), states, 0, y, 1);
-			Utilities.changeBlock(sender, loc, mat.getMaterial(), states, 1, y, 1);
-			Utilities.changeBlock(sender, loc, mat.getMaterial(), states, -1, y, 0);
-			Utilities.changeBlock(sender, loc, mat.getMaterial(), states, 0, y, -1);
-			Utilities.changeBlock(sender, loc, mat.getMaterial(), states, -1, y, 1);
-			Utilities.changeBlock(sender, loc, mat.getMaterial(), states, 1, y, -1);
-			Utilities.changeBlock(sender, loc, mat.getMaterial(), states, -1, y, -1);
+		for (int i = loc.getBlock().getY(); i >= -128; --i) {
+			Utilities.changeBlock(sender, loc, mat, states, 0, i, 0);
+			Utilities.changeBlock(sender, loc, mat, states, 1, i, 0);
+			Utilities.changeBlock(sender, loc, mat, states, 0, i, 1);
+			Utilities.changeBlock(sender, loc, mat, states, 1, i, 1);
+			Utilities.changeBlock(sender, loc, mat, states, -1, i, 0);
+			Utilities.changeBlock(sender, loc, mat, states, 0, i, -1);
+			Utilities.changeBlock(sender, loc, mat, states, -1, i, 1);
+			Utilities.changeBlock(sender, loc, mat, states, 1, i, -1);
+			Utilities.changeBlock(sender, loc, mat, states, -1, i, -1);
 		}
 		FunCommands.blockStates.put(target, states);
 		FunCommands.players.add(target);

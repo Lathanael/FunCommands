@@ -52,11 +52,12 @@ public class Entomb extends CoreCommand {
 		MaterialContainer mat = null;
 		mat = ACHelper.getInstance().checkMaterial(sender, "web");
 
-		target = Utils.getUser(sender, args, permNode, 1, true);
+		target = Utils.getUser(sender, args, permNode, 0, true);
 		if (target == null)
 			return;
 		if (args.hasFlag('u')) {
 			undoEntomb(FunCommands.blockStates.get(target));
+			return;
 		}
 		if (args.length >= 2)
 			mat = ACHelper.getInstance().checkMaterial(sender, args.getString(1));
@@ -93,6 +94,8 @@ public class Entomb extends CoreCommand {
 	}
 
 	private void undoEntomb (BlocksOld states) {
+		if (states == null)
+			return;
 		for (BlockState state : states.getStates())
 			state.update(true);
 	}

@@ -47,8 +47,8 @@ import be.Balor.bukkit.AdminCmd.AbstractAdminCmdPlugin;
  */
 public class FunCommands extends AbstractAdminCmdPlugin {
 
-	public static HashMap<Player, BlocksOld> blockStates = new HashMap<Player, BlocksOld>();
-	public static List<Player> players = new ArrayList<Player>();
+	public static HashMap<Player, BlocksOld> blockStates;
+	public static List<Player> players;
 	public static FCEntityListener fcel;
 
 	/**
@@ -85,6 +85,8 @@ public class FunCommands extends AbstractAdminCmdPlugin {
 				+ " %sender" + ChatColor.DARK_AQUA + " to:" + ChatColor.DARK_RED + "%name");
 		Utils.addLocale("attaintSender", ChatColor.DARK_AQUA + "You have changed the Displayname of" + ChatColor.GOLD
 				+ " %target" + ChatColor.DARK_AQUA + " to:" + ChatColor.DARK_RED +" %name");
+		Utils.addLocale("attaintShowName", ChatColor.DARK_AQUA + "The Displayname is:" + ChatColor.DARK_RED
+				+ " %name");
 		Utils.addLocale("entombSender", ChatColor.DARK_AQUA + "You have entombed " + ChatColor.GOLD
 				+ "%target" + ChatColor.DARK_AQUA + "!");
 		Utils.addLocale("entombTarget", ChatColor.DARK_AQUA + "You have been entombed by " + ChatColor.GOLD
@@ -96,10 +98,11 @@ public class FunCommands extends AbstractAdminCmdPlugin {
 				+ ChatColor.DARK_AQUA + "by " + ChatColor.GOLD + "%sender" + ChatColor.DARK_AQUA + "!");
 		Utils.addLocale("voidYourself", ChatColor.DARK_AQUA + "You have dropped yourself into the " + ChatColor.RED + "VOID"
 				+ ChatColor.DARK_AQUA + "!");
-		Utils.addLocale("rocketTarget", ChatColor.DARK_AQUA + "You have slapped " + ChatColor.GOLD
-				+ "%target" + ChatColor.DARK_AQUA + "!");
-		Utils.addLocale("rocketSender", ChatColor.DARK_AQUA + "You have been slapped by " + ChatColor.GOLD
+		Utils.addLocale("rocketTarget", ChatColor.DARK_AQUA + "You have shot " + ChatColor.GOLD
+				+ "%target" + ChatColor.DARK_AQUA + " high into the air!");
+		Utils.addLocale("rocketSender", ChatColor.DARK_AQUA + "You have been shot high into the air by " + ChatColor.GOLD
 				+ "%sender" + ChatColor.DARK_AQUA + "!");
+		Utils.addLocale("rocketYourself", ChatColor.DARK_AQUA + "You have shot yourself into the air!");
 		LocaleManager.getInstance().save();
 	}
 
@@ -107,6 +110,8 @@ public class FunCommands extends AbstractAdminCmdPlugin {
 	public void onEnable() {
 		super.onEnable();
 		fcel = new FCEntityListener(this);
+		players = new ArrayList<Player>();
+		blockStates = new HashMap<Player, BlocksOld>();
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvent(Type.ENTITY_DEATH, fcel, Priority.Monitor, this);
 		PluginDescriptionFile pdfFile = this.getDescription();
