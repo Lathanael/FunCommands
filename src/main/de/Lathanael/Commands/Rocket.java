@@ -46,10 +46,10 @@ public class Rocket extends CoreCommand {
 	@Override
 	public void execute(CommandSender sender, CommandArgs args) {
 		Player target;
-
 		target = Utils.getUser(sender, args, permNode, 1, true);
 		if (target == null)
 			return;
+
 		HashMap<String, String> replace = new HashMap<String, String>();
 		replace.put("target", target.getName());
 		if (Utils.isPlayer(sender, false))
@@ -66,7 +66,6 @@ public class Rocket extends CoreCommand {
 		} else {
 			Utils.sI18n(sender, "rocketYourself");
 		}
-
 	}
 
 	/*

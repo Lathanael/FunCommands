@@ -39,13 +39,14 @@ public class Attaint extends CoreCommand {
 	@Override
 	public void execute(CommandSender sender, CommandArgs args) {
 		Player target;
-
 		target = Utils.getUser(sender, args, permNode, 0, true);
 		if (target == null)
 			return;
+
 		HashMap<String, String> replace = new HashMap<String, String>();
 		if (args.hasFlag('c')) {
-			replace.put("name", target.getDisplayName());
+			replace.put("dname", target.getDisplayName());
+			replace.put("name", target.getName());
 			Utils.sI18n(sender, "attaintShowName", replace);
 			return;
 		}

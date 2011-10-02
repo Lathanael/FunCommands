@@ -17,10 +17,12 @@
 
 package de.Lathanael.Commands;
 
+import java.util.HashMap;
 import java.util.Random;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.util.Vector;
 
 import be.Balor.Manager.Commands.CommandArgs;
 import be.Balor.Manager.Commands.CoreCommand;
@@ -45,6 +47,28 @@ public class Slap extends CoreCommand {
 		target = Utils.getUser(sender, args, permNode, 0, true);
 		if (target == null)
 			return;
+
+		HashMap<String, String> replace = new HashMap<String, String>();
+		replace.put("target", target.getName());
+		if (Utils.isPlayer(sender, false))
+			replace.put("sender", sender.getName());
+		else
+			replace.put("sender", "Server Admin");
+		Vector direction = target.getLocation().getDirection();
+		sender.sendMessage(direction.toString());
+		if (args.hasFlag('h'))
+			target.setVelocity(new Vector(0, 0, 0));
+		else if (args.hasFlag('v'))
+			target.setVelocity(new Vector(0, 5, 0));
+		else
+			target.setVelocity(target.getVelocity());
+
+		if (!target.equals(sender)) {
+			Utils.sI18n(target, "slapTarget", replace);
+			Utils.sI18n(sender, "slapSender", replace);
+		} else {
+			Utils.sI18n(sender, "slapYourself");
+		}
 	}
 
 

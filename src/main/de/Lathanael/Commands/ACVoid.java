@@ -30,10 +30,7 @@ import de.Lathanael.Tools.Utilities;
 
 import be.Balor.Manager.Commands.CommandArgs;
 import be.Balor.Manager.Commands.CoreCommand;
-import be.Balor.Tools.ACLogger;
-import be.Balor.Tools.MaterialContainer;
 import be.Balor.Tools.Utils;
-import be.Balor.bukkit.AdminCmd.ACHelper;
 
 /**
  * @author Lathanael (aka Philippe Leipold)
@@ -48,13 +45,14 @@ public class ACVoid extends CoreCommand {
 	@Override
 	public void execute(CommandSender sender, CommandArgs args) {
 		Player target;
-		Material mat = null;
-		BlocksOld states = new BlocksOld();
-
-		mat = Material.AIR;
 		target = Utils.getUser(sender, args, permNode, 0, true);
 		if (target == null)
 			return;
+
+		Material mat = null;
+		BlocksOld states = new BlocksOld();
+		mat = Material.AIR;
+
 		FunCommands.players.add(target);
 		Location loc = target.getLocation();
 		for (int i = loc.getBlock().getY(); i >= -128; --i) {

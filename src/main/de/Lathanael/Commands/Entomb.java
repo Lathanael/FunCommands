@@ -47,14 +47,13 @@ public class Entomb extends CoreCommand {
 	@Override
 	public void execute(CommandSender sender, CommandArgs args) {
 		Player target;
-		BlocksOld states = new BlocksOld();
-
-		MaterialContainer mat = null;
-		mat = ACHelper.getInstance().checkMaterial(sender, "web");
-
 		target = Utils.getUser(sender, args, permNode, 0, true);
 		if (target == null)
 			return;
+
+		BlocksOld states = new BlocksOld();
+		MaterialContainer mat = null;
+		mat = ACHelper.getInstance().checkMaterial(sender, "web");
 		if (args.hasFlag('u')) {
 			undoEntomb(FunCommands.blockStates.get(target));
 			return;

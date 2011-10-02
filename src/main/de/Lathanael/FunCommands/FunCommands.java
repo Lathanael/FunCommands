@@ -79,14 +79,16 @@ public class FunCommands extends AbstractAdminCmdPlugin {
 				+ "%target" + ChatColor.DARK_AQUA + "!");
 		Utils.addLocale("slapTarget", ChatColor.DARK_AQUA + "You have been slapped by " + ChatColor.GOLD
 				+ "%sender" + ChatColor.DARK_AQUA + "!");
+		Utils.addLocale("slapYourself", ChatColor.DARK_AQUA + "You have slapped " + ChatColor.GOLD
+				+ "yourself" + ChatColor.DARK_AQUA + "!");
 		Utils.addLocale("attaintYourself", ChatColor.DARK_AQUA + "You changed your Displayname to:" + ChatColor.DARK_RED
 				+ " %name");
 		Utils.addLocale("attaintTarget", ChatColor.DARK_AQUA+  "Your Displayname has been changed by" + ChatColor.GOLD
 				+ " %sender" + ChatColor.DARK_AQUA + " to:" + ChatColor.DARK_RED + "%name");
 		Utils.addLocale("attaintSender", ChatColor.DARK_AQUA + "You have changed the Displayname of" + ChatColor.GOLD
 				+ " %target" + ChatColor.DARK_AQUA + " to:" + ChatColor.DARK_RED +" %name");
-		Utils.addLocale("attaintShowName", ChatColor.DARK_AQUA + "The Displayname is:" + ChatColor.DARK_RED
-				+ " %name");
+		Utils.addLocale("attaintShowName", ChatColor.DARK_AQUA + "The Displayname of " + ChatColor.GOLD + "%name"
+				+ ChatColor.DARK_AQUA + " is:" + ChatColor.DARK_RED	+ " %dname");
 		Utils.addLocale("entombSender", ChatColor.DARK_AQUA + "You have entombed " + ChatColor.GOLD
 				+ "%target" + ChatColor.DARK_AQUA + "!");
 		Utils.addLocale("entombTarget", ChatColor.DARK_AQUA + "You have been entombed by " + ChatColor.GOLD
