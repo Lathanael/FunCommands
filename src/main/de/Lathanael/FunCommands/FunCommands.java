@@ -22,17 +22,12 @@ import java.util.HashMap;
 import java.util.List;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event.Priority;
-import org.bukkit.event.Event.Type;
 import org.bukkit.plugin.PluginDescriptionFile;
-import org.bukkit.plugin.PluginManager;
-
 import de.Lathanael.Commands.ACVoid;
 import de.Lathanael.Commands.Attaint;
 import de.Lathanael.Commands.Entomb;
 import de.Lathanael.Commands.Rocket;
 import de.Lathanael.Commands.Slap;
-import de.Lathanael.Listeners.FCEntityListener;
 import de.Lathanael.Tools.BlocksOld;
 import be.Balor.Manager.LocaleManager;
 import be.Balor.Manager.Permissions.PermParent;
@@ -49,8 +44,8 @@ public class FunCommands extends AbstractAdminCmdPlugin {
 
 	public static HashMap<Player, BlocksOld> blockStates;
 	public static List<Player> players;
-	public static FCEntityListener fcel;
 	private Configuration config;
+	private static FunCommands instance;
 
 	/**
 	 * @param name
@@ -112,13 +107,11 @@ public class FunCommands extends AbstractAdminCmdPlugin {
 	@Override
 	public void onEnable() {
 		super.onEnable();
+		instance = this;
 		config = Configuration.getInstance();
 		config.setInstance(this);
-		fcel = new FCEntityListener(this);
 		players = new ArrayList<Player>();
 		blockStates = new HashMap<Player, BlocksOld>();
-		PluginManager pm = getServer().getPluginManager();
-		pm.registerEvent(Type.ENTITY_DEATH, fcel, Priority.Monitor, this);
 		PluginDescriptionFile pdfFile = this.getDescription();
 		permissionLinker.registerAllPermParent();
 		System.out.print("[" + pdfFile.getName() +"] Enabled. (Version " + pdfFile.getVersion() + ")");
@@ -132,5 +125,9 @@ public class FunCommands extends AbstractAdminCmdPlugin {
 	public void onDisable() {
 		PluginDescriptionFile pdfFile = this.getDescription();
 		System.out.print("[" + pdfFile.getName() +"] Disabled. (Version " + pdfFile.getVersion() + ")");
+	}
+
+	public static FunCommands getInstance() {
+		return instance;
 	}
 }

@@ -18,9 +18,9 @@
 package de.Lathanael.Commands;
 
 import java.util.HashMap;
-
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.BlockState;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -90,6 +90,18 @@ public class ACVoid extends CoreCommand {
 		} else {
 			Utils.sI18n(sender, "voidYourself", replace);
 		}
+		final Player playerCopy = target;
+		FunCommands.getInstance().getServer().getScheduler().scheduleSyncDelayedTask(FunCommands.getInstance(),
+				new Runnable() {
+					public void run() {
+						FunCommands.players.remove(playerCopy);
+						BlocksOld states = FunCommands.blockStates.get(playerCopy);
+						for (BlockState state : states.getStates())
+							state.update(true);
+						FunCommands.blockStates.remove(playerCopy);
+					}
+				},
+				200L);
 	}
 
 	/*
