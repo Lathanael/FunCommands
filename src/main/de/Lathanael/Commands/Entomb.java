@@ -40,10 +40,20 @@ import be.Balor.bukkit.AdminCmd.ACHelper;
  */
 public class Entomb extends CoreCommand {
 
+	/**
+	 *
+	 */
 	public Entomb() {
 		super("ac_entomb", "admincmd.fun.entomb", "FunCommands");
 	}
 
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see
+	 * be.Balor.Manager.ACCommands#execute(org.bukkit.command.CommandSender,
+	 * java.lang.String[])
+	 */
 	@Override
 	public void execute(CommandSender sender, CommandArgs args) {
 		Player target;
@@ -86,7 +96,11 @@ public class Entomb extends CoreCommand {
 		}
 	}
 
-
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see be.Balor.Manager.ACCommands#argsCheck(java.lang.String[])
+	 */
 	@Override
 	public boolean argsCheck(String... args) {
 		return args != null && args.length >= 1;

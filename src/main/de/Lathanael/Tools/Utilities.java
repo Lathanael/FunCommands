@@ -33,12 +33,18 @@ public class Utilities {
 	 * Change the block at a location(+shift) into a given material
 	 *
 	 * @author Lathanael
-	 * @param loc The location of the block to be changed
-	 * @param mat The material the block should be changed to
-	 * @param x Shift in x direction to modify the location
-	 * @param y Shift in y direction to modify the location
-	 * @param z Shift in z direction to modify the location
-	 * @param states The states list where the old BlockState will be saved in.
+	 * @param loc
+	 *             The location of the block to be changed
+	 * @param mat
+	 *             The material the block should be changed to
+	 * @param x
+	 *             Shift in x direction to modify the location
+	 * @param y
+	 *             Shift in y direction to modify the location
+	 * @param z
+	 *             Shift in z direction to modify the location
+	 * @param states
+	 *             The states list where the old BlockState will be saved in.
 	 */
 	public static void changeBlock (CommandSender sender, Location loc, Material mat, BlocksOld states, int x, int y, int z) {
 		Block block = null;

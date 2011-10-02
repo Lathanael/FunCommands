@@ -17,7 +17,7 @@ commands:
         usage: /<command> <-flags> [player]
     ac_attaint:
         description: Attaint the player by changing his Displayname.
-        aliases: [attaint]
+        aliases: [attaint, nick]
         usage: /<command> [player] [DispName]
     ac_entomb:
         description: Entomb a player in a cube of defined material, the flag -u removes the cube.

@@ -24,6 +24,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
+import de.Lathanael.FunCommands.Configuration;
+
 import be.Balor.Manager.Commands.CommandArgs;
 import be.Balor.Manager.Commands.CoreCommand;
 import be.Balor.Tools.Utils;
@@ -34,10 +36,20 @@ import be.Balor.Tools.Utils;
  */
 public class Slap extends CoreCommand {
 
+	/**
+	 *
+	 */
 	public Slap() {
 		super("ac_slap", "admincmd.fun.slap", "FunCommands");
 	}
 
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see
+	 * be.Balor.Manager.ACCommands#execute(org.bukkit.command.CommandSender,
+	 * java.lang.String[])
+	 */
 	@Override
 	public void execute(CommandSender sender, CommandArgs args) {
 		Random random = new Random();
@@ -48,6 +60,8 @@ public class Slap extends CoreCommand {
 		if (target == null)
 			return;
 
+		float power = 0;
+		float height = 0;
 		HashMap<String, String> replace = new HashMap<String, String>();
 		replace.put("target", target.getName());
 		if (Utils.isPlayer(sender, false))
@@ -56,12 +70,48 @@ public class Slap extends CoreCommand {
 			replace.put("sender", "Server Admin");
 		Vector direction = target.getLocation().getDirection();
 		sender.sendMessage(direction.toString());
-		if (args.hasFlag('h'))
-			target.setVelocity(new Vector(0, 0, 0));
-		else if (args.hasFlag('v'))
-			target.setVelocity(new Vector(0, 5, 0));
-		else
-			target.setVelocity(target.getVelocity());
+		if (args.hasFlag('h')) {
+			power = Configuration.getInstance().getConfFloat("Slap.hPower");
+			height = Configuration.getInstance().getConfFloat("Slap.hHeight");
+			if (power > 10) {
+				power = 10;
+				Configuration.getInstance().setConfProperty("Slap.hPower", 10);
+			}
+			if (height > 10) {
+				height = 10;
+				Configuration.getInstance().setConfProperty("Slap.hHeight", 10);
+			}
+			direction = new Vector(direction.getX()*power, height, direction.getZ()*power);
+			target.setVelocity(direction);
+		}
+		else if (args.hasFlag('v')) {
+			power = Configuration.getInstance().getConfFloat("Slap.vPower");
+			height = Configuration.getInstance().getConfFloat("Slap.vHeight");
+			if (power > 10) {
+				power = 10;
+				Configuration.getInstance().setConfProperty("Slap.vPower", 10);
+			}
+			if (height > 10) {
+				height = 10;
+				Configuration.getInstance().setConfProperty("Slap.vHeight", 10);
+			}
+			direction = new Vector(direction.getX()*power, height, direction.getZ()*power);
+			target.setVelocity(direction);
+		}
+		else {
+			power = Configuration.getInstance().getConfFloat("Slap.normalPower");
+			height = Configuration.getInstance().getConfFloat("Slap.normalHeight");
+			if (power > 10) {
+				power = 10;
+				Configuration.getInstance().setConfProperty("Slap.normalPower", 10);
+			}
+			if (height > 10) {
+				height = 10;
+				Configuration.getInstance().setConfProperty("Slap.normalHeight", 10);
+			}
+			direction = new Vector(direction.getX()*power, height, direction.getZ()*power);
+			target.setVelocity(direction);
+		}
 
 		if (!target.equals(sender)) {
 			Utils.sI18n(target, "slapTarget", replace);
@@ -71,7 +121,11 @@ public class Slap extends CoreCommand {
 		}
 	}
 
-
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see be.Balor.Manager.ACCommands#argsCheck(java.lang.String[])
+	 */
 	@Override
 	public boolean argsCheck(String... args) {
 		return args != null && args.length >= 1;

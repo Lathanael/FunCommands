@@ -50,6 +50,7 @@ public class FunCommands extends AbstractAdminCmdPlugin {
 	public static HashMap<Player, BlocksOld> blockStates;
 	public static List<Player> players;
 	public static FCEntityListener fcel;
+	private Configuration config;
 
 	/**
 	 * @param name
@@ -111,6 +112,8 @@ public class FunCommands extends AbstractAdminCmdPlugin {
 	@Override
 	public void onEnable() {
 		super.onEnable();
+		config = Configuration.getInstance();
+		config.setInstance();
 		fcel = new FCEntityListener(this);
 		players = new ArrayList<Player>();
 		blockStates = new HashMap<Player, BlocksOld>();

@@ -32,10 +32,20 @@ import be.Balor.Tools.Utils;
  */
 public class Attaint extends CoreCommand {
 
+	/**
+	 *
+	 */
 	public Attaint() {
 		super("ac_attaint", "admincmd.fun.attaint", "FunCommands");
 	}
 
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see
+	 * be.Balor.Manager.ACCommands#execute(org.bukkit.command.CommandSender,
+	 * java.lang.String[])
+	 */
 	@Override
 	public void execute(CommandSender sender, CommandArgs args) {
 		Player target;
@@ -69,7 +79,11 @@ public class Attaint extends CoreCommand {
 		}
 	}
 
-
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see be.Balor.Manager.ACCommands#argsCheck(java.lang.String[])
+	 */
 	@Override
 	public boolean argsCheck(String... args) {
 		return args != null && args.length >= 2;
