@@ -69,7 +69,6 @@ public class Slap extends CoreCommand {
 		else
 			replace.put("sender", "Server Admin");
 		Vector direction = target.getLocation().getDirection();
-		sender.sendMessage(direction.toString());
 		if (args.hasFlag('h')) {
 			power = Configuration.getInstance().getConfFloat("Slap.hPower");
 			height = Configuration.getInstance().getConfFloat("Slap.hHeight");

@@ -70,6 +70,8 @@ public class Entomb extends CoreCommand {
 		}
 		if (args.length >= 2)
 			mat = ACHelper.getInstance().checkMaterial(sender, args.getString(1));
+		if (mat.isNull())
+			return;
 		Location loc = target.getLocation();
 		Utilities.changeBlock(sender, loc, mat.getMaterial(), states, 1, 0, 0);
 		Utilities.changeBlock(sender, loc, mat.getMaterial(), states, -1, 0, 0);
