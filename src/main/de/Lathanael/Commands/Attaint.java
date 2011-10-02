@@ -60,8 +60,6 @@ public class Attaint extends CoreCommand {
 			Utils.sI18n(sender, "attaintShowName", replace);
 			return;
 		}
-		if (!Utils.checkImmunity(sender, args, 0))
-			return;
 
 		replace.put("target", target.getName());
 		replace.put("name", args.getString(1));
