@@ -24,6 +24,7 @@ import org.bukkit.entity.Player;
 
 import be.Balor.Manager.Commands.CommandArgs;
 import be.Balor.Manager.Commands.CoreCommand;
+import be.Balor.Manager.Permissions.PermissionManager;
 import be.Balor.Tools.Utils;
 
 /**
@@ -55,6 +56,8 @@ public class Attaint extends CoreCommand {
 
 		HashMap<String, String> replace = new HashMap<String, String>();
 		if (args.hasFlag('c')) {
+			if (!(PermissionManager.hasPerm(sender, "admincmd.fun.attaint.check")))
+				return;
 			replace.put("dname", target.getDisplayName());
 			replace.put("name", target.getName());
 			Utils.sI18n(sender, "attaintShowName", replace);
@@ -87,4 +90,11 @@ public class Attaint extends CoreCommand {
 		return args != null && args.length >= 2;
 	}
 
+	/* (non-Javadoc)
+	 * @see be.Balor.Manager.Commands.CoreCommand#registerBukkitPerm()
+	 */
+	@Override
+	public void registerBukkitPerm() {
+		plugin.getPermissionLinker().addPermChild("admincmd.fun.attaint.check");
+	}
 }
