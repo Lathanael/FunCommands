@@ -108,6 +108,7 @@ public class Configuration {
 	 */
 	public void setConfProperty(String path, Object obj) {
 		pluginConfig.setProperty(path, obj);
+		pluginConfig.save();
 	}
 
 	/**
