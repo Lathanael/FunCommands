@@ -17,6 +17,10 @@
 
 package de.Lathanael.FunCommands;
 
+import java.io.File;
+import java.io.IOException;
+
+import be.Balor.Tools.ACLogger;
 import be.Balor.Tools.Configuration.ExtendedConfiguration;
 
 /**
@@ -38,8 +42,10 @@ public class Configuration {
 	 * @param pluginInstance
 	 *            the pluginInstance to set
 	 */
-	public void setInstance() {
-		pluginConfig = new ExtendedConfiguration("config.yml", null);
+	public void setInstance(FunCommands instnace) {
+		String directory = instnace.getDataFolder().getPath();
+		File file = createConfFile(directory, "config.yml");
+		pluginConfig = new ExtendedConfiguration(file);
 		pluginConfig.load();
 		pluginConfig.addProperty("Slap.normalPower", 1.1);
 		pluginConfig.addProperty("Slap.normalHeight", 0);
@@ -102,5 +108,22 @@ public class Configuration {
 	 */
 	public void setConfProperty(String path, Object obj) {
 		pluginConfig.setProperty(path, obj);
+	}
+
+	/**
+	 *
+	 */
+	private File createConfFile(String dir, String name) {
+		File file = new File(dir + File.separator + name);
+		new File(dir).mkdir();
+		if (!file.exists()){
+			try {
+				file.createNewFile();
+			}
+			catch (IOException ex){
+				ACLogger.info("[FunCommands] Could not create file: " + name);
+			}
+		}
+		return file;
 	}
 }

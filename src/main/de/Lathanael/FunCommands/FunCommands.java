@@ -113,7 +113,7 @@ public class FunCommands extends AbstractAdminCmdPlugin {
 	public void onEnable() {
 		super.onEnable();
 		config = Configuration.getInstance();
-		config.setInstance();
+		config.setInstance(this);
 		fcel = new FCEntityListener(this);
 		players = new ArrayList<Player>();
 		blockStates = new HashMap<Player, BlocksOld>();
