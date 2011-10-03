@@ -51,7 +51,7 @@ public class Rocket extends CoreCommand {
 	@Override
 	public void execute(CommandSender sender, CommandArgs args) {
 		Player target;
-		target = Utils.getUser(sender, args, permNode, 1, true);
+		target = Utils.getUser(sender, args, permNode, 0, true);
 		if (target == null)
 			return;
 		float power = 0;
