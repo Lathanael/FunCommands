@@ -111,6 +111,6 @@ public class ACVoid extends CoreCommand {
 	 */
 	@Override
 	public boolean argsCheck(String... args) {
-		return args != null && args.length >= 1;
+		return args != null && args.length >= 2;
 	}
 }
