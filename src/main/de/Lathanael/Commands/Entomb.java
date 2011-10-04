@@ -45,6 +45,7 @@ public class Entomb extends CoreCommand {
 	 */
 	public Entomb() {
 		super("ac_entomb", "admincmd.fun.entomb", "FunCommands");
+		other = true;
 	}
 
 	/*

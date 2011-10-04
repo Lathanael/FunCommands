@@ -43,6 +43,7 @@ public class ACVoid extends CoreCommand {
 	 */
 	public ACVoid() {
 		super("ac_void", "admincmd.fun.void", "FunCommands");
+		other = true;
 	}
 
 	/*

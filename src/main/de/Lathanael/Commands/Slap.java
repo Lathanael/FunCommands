@@ -41,6 +41,7 @@ public class Slap extends CoreCommand {
 	 */
 	public Slap() {
 		super("ac_slap", "admincmd.fun.slap", "FunCommands");
+		other = true;
 	}
 
 	/*
