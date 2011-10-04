@@ -42,8 +42,8 @@ public class Configuration {
 	 * @param pluginInstance
 	 *            the pluginInstance to set
 	 */
-	public void setInstance(FunCommands instnace) {
-		String directory = instnace.getDataFolder().getPath();
+	public void setInstance(FunCommands instance) {
+		String directory = instance.getDataFolder().getPath();
 		File file = createConfFile(directory, "config.yml");
 		pluginConfig = new ExtendedConfiguration(file);
 		pluginConfig.load();

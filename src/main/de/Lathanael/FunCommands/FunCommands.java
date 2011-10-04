@@ -48,7 +48,6 @@ public class FunCommands extends AbstractAdminCmdPlugin {
 	public static HashMap<Player, BlocksOld> blockStates;
 	public static HashMap<String, Player> players;
 	private Configuration config;
-	private static FunCommands instance;
 	private static FCPlayerListener fcPL = new FCPlayerListener();;
 	private static PluginManager pm;
 
@@ -112,7 +111,6 @@ public class FunCommands extends AbstractAdminCmdPlugin {
 	@Override
 	public void onEnable() {
 		super.onEnable();
-		instance = this;
 		config = Configuration.getInstance();
 		config.setInstance(this);
 		players = new HashMap<String, Player>();
@@ -133,9 +131,5 @@ public class FunCommands extends AbstractAdminCmdPlugin {
 	public void onDisable() {
 		PluginDescriptionFile pdfFile = this.getDescription();
 		System.out.print("[" + pdfFile.getName() +"] Disabled. (Version " + pdfFile.getVersion() + ")");
-	}
-
-	public static FunCommands getInstance() {
-		return instance;
 	}
 }

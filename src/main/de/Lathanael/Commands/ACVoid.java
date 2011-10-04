@@ -31,6 +31,7 @@ import de.Lathanael.Tools.Utilities;
 import be.Balor.Manager.Commands.CommandArgs;
 import be.Balor.Manager.Commands.CoreCommand;
 import be.Balor.Tools.Utils;
+import be.Balor.bukkit.AdminCmd.ACPluginManager;
 
 /**
  * @author Lathanael (aka Philippe Leipold)
@@ -90,7 +91,8 @@ public class ACVoid extends CoreCommand {
 			Utils.sI18n(sender, "voidYourself", replace);
 		}
 		final Player playerCopy = target;
-		FunCommands.getInstance().getServer().getScheduler().scheduleSyncDelayedTask(FunCommands.getInstance(),
+		FunCommands instance = (FunCommands) ACPluginManager.getPluginInstance("FunCommands");
+		instance.getServer().getScheduler().scheduleSyncDelayedTask(instance,
 				new Runnable() {
 					public void run() {
 						BlocksOld states = FunCommands.blockStates.get(playerCopy);
