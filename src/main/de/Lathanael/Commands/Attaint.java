@@ -108,5 +108,6 @@ public class Attaint extends CoreCommand {
 	@Override
 	public void registerBukkitPerm() {
 		plugin.getPermissionLinker().addPermChild("admincmd.fun.attaint.check");
+		super.registerBukkitPerm();
 	}
 }
