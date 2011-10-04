@@ -11,7 +11,7 @@
   <build>
   	<sourceDirectory>${basedir}/src/main</sourceDirectory>
   	<defaultGoal>clean install</defaultGoal>
-  	<finalName>FunCommands</finalName>
+  	<finalName>FunCommands-SNAPSHOT</finalName>
   	<resources>
   		<resource>
   			<targetPath>.</targetPath>
