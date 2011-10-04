@@ -22,6 +22,8 @@ import java.util.HashMap;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import de.Lathanael.FunCommands.FunCommands;
+
 import be.Balor.Manager.Commands.CommandArgs;
 import be.Balor.Manager.Commands.CoreCommand;
 import be.Balor.Manager.Permissions.PermissionManager;
@@ -38,6 +40,7 @@ public class Attaint extends CoreCommand {
 	 */
 	public Attaint() {
 		super("ac_attaint", "admincmd.fun.attaint", "FunCommands");
+		other = true;
 	}
 
 	/*
@@ -50,7 +53,12 @@ public class Attaint extends CoreCommand {
 	@Override
 	public void execute(CommandSender sender, CommandArgs args) {
 		Player target;
-		target = Utils.getUser(sender, args, permNode, 0, true);
+		String name = "";
+		if (FunCommands.players.containsKey(args.getString(0)))
+			name = FunCommands.players.get(args.getString(0)).getName();
+		else
+			name = args.getString(0);
+		target = Utils.getUser(sender, name, permNode, true);
 		if (target == null)
 			return;
 
@@ -63,7 +71,9 @@ public class Attaint extends CoreCommand {
 			Utils.sI18n(sender, "attaintShowName", replace);
 			return;
 		}
-
+		if (FunCommands.players.containsKey(args.getString(0)))
+			FunCommands.players.remove(args.getString(0));
+		FunCommands.players.put(args.getString(1), target);
 		replace.put("target", target.getName());
 		replace.put("name", args.getString(1));
 		if (Utils.isPlayer(sender, false))

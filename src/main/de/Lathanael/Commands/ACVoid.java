@@ -63,7 +63,6 @@ public class ACVoid extends CoreCommand {
 		BlocksOld states = new BlocksOld();
 		mat = Material.AIR;
 
-		FunCommands.players.add(target);
 		Location loc = target.getLocation();
 		for (int i = loc.getBlock().getY(); i >= -128; --i) {
 			Utilities.changeBlock(sender, loc, mat, states, 0, i, 0);
@@ -77,7 +76,6 @@ public class ACVoid extends CoreCommand {
 			Utilities.changeBlock(sender, loc, mat, states, -1, i, -1);
 		}
 		FunCommands.blockStates.put(target, states);
-		FunCommands.players.add(target);
 		HashMap<String, String> replace = new HashMap<String, String>();
 		replace.put("target", target.getName());
 		if (Utils.isPlayer(sender, false))
@@ -94,7 +92,6 @@ public class ACVoid extends CoreCommand {
 		FunCommands.getInstance().getServer().getScheduler().scheduleSyncDelayedTask(FunCommands.getInstance(),
 				new Runnable() {
 					public void run() {
-						FunCommands.players.remove(playerCopy);
 						BlocksOld states = FunCommands.blockStates.get(playerCopy);
 						for (BlockState state : states.getStates())
 							state.update(true);

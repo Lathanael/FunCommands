@@ -17,17 +17,20 @@
 
 package de.Lathanael.FunCommands;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event.Priority;
+import org.bukkit.event.Event.Type;
 import org.bukkit.plugin.PluginDescriptionFile;
+import org.bukkit.plugin.PluginManager;
+
 import de.Lathanael.Commands.ACVoid;
 import de.Lathanael.Commands.Attaint;
 import de.Lathanael.Commands.Entomb;
 import de.Lathanael.Commands.Rocket;
 import de.Lathanael.Commands.Slap;
+import de.Lathanael.Listeners.FCPlayerListener;
 import de.Lathanael.Tools.BlocksOld;
 import be.Balor.Manager.LocaleManager;
 import be.Balor.Manager.Permissions.PermParent;
@@ -43,9 +46,11 @@ import be.Balor.bukkit.AdminCmd.AbstractAdminCmdPlugin;
 public class FunCommands extends AbstractAdminCmdPlugin {
 
 	public static HashMap<Player, BlocksOld> blockStates;
-	public static List<Player> players;
+	public static HashMap<String, Player> players;
 	private Configuration config;
 	private static FunCommands instance;
+	private static FCPlayerListener fcPL = new FCPlayerListener();;
+	private static PluginManager pm;
 
 	/**
 	 * @param name
@@ -110,8 +115,11 @@ public class FunCommands extends AbstractAdminCmdPlugin {
 		instance = this;
 		config = Configuration.getInstance();
 		config.setInstance(this);
-		players = new ArrayList<Player>();
+		players = new HashMap<String, Player>();
 		blockStates = new HashMap<Player, BlocksOld>();
+		pm = getServer().getPluginManager();
+		pm.registerEvent(Type.PLAYER_KICK, fcPL, Priority.Monitor, this);
+		pm.registerEvent(Type.PLAYER_QUIT, fcPL, Priority.Monitor, this);
 		PluginDescriptionFile pdfFile = this.getDescription();
 		permissionLinker.registerAllPermParent();
 		System.out.print("[" + pdfFile.getName() +"] Enabled. (Version " + pdfFile.getVersion() + ")");
