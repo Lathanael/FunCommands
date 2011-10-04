@@ -54,11 +54,13 @@ public class Attaint extends CoreCommand {
 	public void execute(CommandSender sender, CommandArgs args) {
 		Player target;
 		String name = "";
+		CommandArgs newArgs;
 		if (FunCommands.players.containsKey(args.getString(0)))
 			name = FunCommands.players.get(args.getString(0)).getName();
 		else
 			name = args.getString(0);
-		target = Utils.getUser(sender, name, permNode, true);
+		newArgs = new CommandArgs(name);
+		target = Utils.getUser(sender, newArgs, permNode, 0, true);
 		if (target == null)
 			return;
 
