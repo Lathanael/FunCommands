@@ -82,6 +82,7 @@ public class Rocket extends CoreCommand {
 		if (!target.equals(sender)) {
 			Utils.sI18n(target, "rocketTarget", replace);
 			Utils.sI18n(sender, "rocketSender", replace);
+			return;
 		} else {
 			Utils.sI18n(sender, "rocketYourself");
 		}

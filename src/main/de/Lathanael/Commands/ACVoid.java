@@ -66,7 +66,7 @@ public class ACVoid extends CoreCommand {
 		mat = Material.AIR;
 
 		Location loc = target.getLocation();
-		for (int i = loc.getBlock().getY(); i >= -128; --i) {
+		for (int i = loc.getBlock().getY(); i >= -150; --i) {
 			Utilities.changeBlock(sender, loc, mat, states, 0, i, 0);
 			Utilities.changeBlock(sender, loc, mat, states, 1, i, 0);
 			Utilities.changeBlock(sender, loc, mat, states, 0, i, 1);
@@ -111,6 +111,6 @@ public class ACVoid extends CoreCommand {
 	 */
 	@Override
 	public boolean argsCheck(String... args) {
-		return args != null && args.length >= 2;
+		return args != null && args.length >= 1;
 	}
 }
