@@ -20,7 +20,7 @@ package de.Lathanael.FC.FunCommands;
 import java.io.File;
 import java.io.IOException;
 
-import be.Balor.Tools.ACLogger;
+import be.Balor.Tools.Debug.ACLogger;
 import be.Balor.Tools.Configuration.ExtendedConfiguration;
 
 /**
