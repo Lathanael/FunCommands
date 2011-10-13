@@ -15,7 +15,7 @@
  * along with FunCommands.  If not, see <http://www.gnu.org/licenses/>.
  ************************************************************************/
 
-package de.Lathanael.FunCommands;
+package de.Lathanael.FC.FunCommands;
 
 import java.io.File;
 import java.io.IOException;

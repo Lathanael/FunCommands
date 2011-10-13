@@ -15,7 +15,7 @@
  * along with FunCommands.  If not, see <http://www.gnu.org/licenses/>.
  ************************************************************************/
 
-package de.Lathanael.FunCommands;
+package de.Lathanael.FC.FunCommands;
 
 import java.util.HashMap;
 import org.bukkit.ChatColor;
@@ -25,15 +25,16 @@ import org.bukkit.event.Event.Type;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 
-import de.Lathanael.Commands.ACVoid;
-import de.Lathanael.Commands.Attaint;
-import de.Lathanael.Commands.Entomb;
-import de.Lathanael.Commands.Rocket;
-import de.Lathanael.Commands.Slap;
-import de.Lathanael.Listeners.FCPlayerListener;
-import de.Lathanael.Tools.BlocksOld;
+import de.Lathanael.FC.Commands.ACVoid;
+import de.Lathanael.FC.Commands.Attaint;
+import de.Lathanael.FC.Commands.Entomb;
+import de.Lathanael.FC.Commands.Rocket;
+import de.Lathanael.FC.Commands.Slap;
+import de.Lathanael.FC.Listeners.FCPlayerListener;
+import de.Lathanael.FC.Tools.BlocksOld;
 import be.Balor.Manager.LocaleManager;
 import be.Balor.Manager.Permissions.PermParent;
+import be.Balor.Tools.ACLogger;
 import be.Balor.Tools.Utils;
 import be.Balor.bukkit.AdminCmd.ACPluginManager;
 import be.Balor.bukkit.AdminCmd.AbstractAdminCmdPlugin;
@@ -48,7 +49,7 @@ public class FunCommands extends AbstractAdminCmdPlugin {
 	public static HashMap<Player, BlocksOld> blockStates;
 	public static HashMap<String, Player> players;
 	private Configuration config;
-	private static FCPlayerListener fcPL = new FCPlayerListener();;
+	private static FCPlayerListener fcPL = new FCPlayerListener();
 	private static PluginManager pm;
 
 	/**
@@ -120,7 +121,7 @@ public class FunCommands extends AbstractAdminCmdPlugin {
 		pm.registerEvent(Type.PLAYER_QUIT, fcPL, Priority.Monitor, this);
 		PluginDescriptionFile pdfFile = this.getDescription();
 		permissionLinker.registerAllPermParent();
-		System.out.print("[" + pdfFile.getName() +"] Enabled. (Version " + pdfFile.getVersion() + ")");
+		ACLogger.info("[" + pdfFile.getName() +"] Enabled. (Version " + pdfFile.getVersion() + ")");
 	}
 
 	/*
@@ -130,6 +131,6 @@ public class FunCommands extends AbstractAdminCmdPlugin {
 	 */
 	public void onDisable() {
 		PluginDescriptionFile pdfFile = this.getDescription();
-		System.out.print("[" + pdfFile.getName() +"] Disabled. (Version " + pdfFile.getVersion() + ")");
+		ACLogger.info("[" + pdfFile.getName() +"] Disabled. (Version " + pdfFile.getVersion() + ")");
 	}
 }

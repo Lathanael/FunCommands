@@ -15,31 +15,33 @@
  * along with FunCommands.  If not, see <http://www.gnu.org/licenses/>.
  ************************************************************************/
 
-package de.Lathanael.Tools;
+package de.Lathanael.FC.Listeners;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.bukkit.event.player.PlayerKickEvent;
+import org.bukkit.event.player.PlayerListener;
+import org.bukkit.event.player.PlayerQuitEvent;
 
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockState;
+import de.Lathanael.FC.FunCommands.FunCommands;
 
 /**
  * @author Lathanael (aka Philippe Leipold)
  *
  */
-public class BlocksOld {
+public class FCPlayerListener extends PlayerListener {
 
-	private List<BlockState> blocks = new ArrayList<BlockState>();
-
-	public BlocksOld () {
+	public FCPlayerListener() {
 
 	}
 
-	public void addBlock(Block block) {
-		blocks.add(block.getState());
+	public void onPlayerKick(PlayerKickEvent event) {
+		String displayName = event.getPlayer().getDisplayName();
+		if (FunCommands.players.containsKey(displayName))
+			FunCommands.players.remove(displayName);
 	}
 
-	public List<BlockState> getStates() {
-		return blocks;
+	public void onPlayerQuit(PlayerQuitEvent event) {
+		String displayName = event.getPlayer().getDisplayName();
+		if (FunCommands.players.containsKey(displayName))
+			FunCommands.players.remove(displayName);
 	}
 }

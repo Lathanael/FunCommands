@@ -15,16 +15,14 @@
  * along with FunCommands.  If not, see <http://www.gnu.org/licenses/>.
  ************************************************************************/
 
-package de.Lathanael.Commands;
+package de.Lathanael.FC.Commands;
 
 import java.util.HashMap;
-import java.util.Random;
-
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
-import de.Lathanael.FunCommands.Configuration;
+import de.Lathanael.FC.FunCommands.Configuration;
 
 import be.Balor.Manager.Commands.CommandArgs;
 import be.Balor.Manager.Commands.CoreCommand;
@@ -34,13 +32,13 @@ import be.Balor.Tools.Utils;
  * @author Lathanael (aka Philippe Leipold)
  *
  */
-public class Slap extends CoreCommand {
+public class Rocket extends CoreCommand {
 
 	/**
 	 *
 	 */
-	public Slap() {
-		super("ac_slap", "admincmd.fun.slap", "FunCommands");
+	public Rocket() {
+		super("ac_rocket", "admincmd.fun.rocket", "FunCommands");
 		other = true;
 	}
 
@@ -53,71 +51,40 @@ public class Slap extends CoreCommand {
 	 */
 	@Override
 	public void execute(CommandSender sender, CommandArgs args) {
-		Random random = new Random();
-		random.nextInt(10);
 		Player target;
-
 		target = Utils.getUser(sender, args, permNode, 0, true);
 		if (target == null)
 			return;
-
 		float power = 0;
-		float height = 0;
 		HashMap<String, String> replace = new HashMap<String, String>();
 		replace.put("target", target.getName());
 		if (Utils.isPlayer(sender, false))
 			replace.put("sender", sender.getName());
 		else
 			replace.put("sender", "Server Admin");
-		Vector direction = target.getLocation().getDirection();
 		if (args.hasFlag('h')) {
-			power = Configuration.getInstance().getConfFloat("Slap.hPower");
-			height = Configuration.getInstance().getConfFloat("Slap.hHeight");
+			power = Configuration.getInstance().getConfFloat("Rocket.flagPower");
 			if (power > 10) {
 				power = 10;
-				Configuration.getInstance().setConfProperty("Slap.hPower", 10);
+				Configuration.getInstance().setConfProperty("Rocket.flagPower", 10);
 			}
-			if (height > 10) {
-				height = 10;
-				Configuration.getInstance().setConfProperty("Slap.hHeight", 10);
-			}
-			direction = new Vector(direction.getX()*power, height, direction.getZ()*power);
-			target.setVelocity(direction);
-		}
-		else if (args.hasFlag('v')) {
-			power = Configuration.getInstance().getConfFloat("Slap.vPower");
-			height = Configuration.getInstance().getConfFloat("Slap.vHeight");
-			if (power > 10) {
-				power = 10;
-				Configuration.getInstance().setConfProperty("Slap.vPower", 10);
-			}
-			if (height > 10) {
-				height = 10;
-				Configuration.getInstance().setConfProperty("Slap.vHeight", 10);
-			}
-			direction = new Vector(direction.getX()*power, height, direction.getZ()*power);
-			target.setVelocity(direction);
+			target.setVelocity(new Vector(0, power, 0));
 		}
 		else {
-			power = Configuration.getInstance().getConfFloat("Slap.normalPower");
-			height = Configuration.getInstance().getConfFloat("Slap.normalHeight");
+			power = Configuration.getInstance().getConfFloat("Rocket.normalPower");
 			if (power > 10) {
 				power = 10;
-				Configuration.getInstance().setConfProperty("Slap.normalPower", 10);
+				Configuration.getInstance().setConfProperty("Rocket.normalPower", 10);
 			}
-			if (height > 10) {
-				height = 10;
-				Configuration.getInstance().setConfProperty("Slap.normalHeight", 10);
-			}
-			direction = new Vector(direction.getX()*power, height, direction.getZ()*power);
-			target.setVelocity(direction);
+			target.setVelocity(new Vector(0, power, 0));
 		}
 
 		if (!target.equals(sender)) {
-			Utils.sI18n(target, "slapTarget", replace);
-			Utils.sI18n(sender, "slapSender", replace);
+			Utils.sI18n(target, "rocketTarget", replace);
+			Utils.sI18n(sender, "rocketSender", replace);
+			return;
 		} else {
-			Utils.sI18n(sender, "slapYourself");
+			Utils.sI18n(sender, "rocketYourself");
 		}
 	}
 

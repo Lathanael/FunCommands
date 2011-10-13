@@ -15,7 +15,7 @@
  * along with FunCommands.  If not, see <http://www.gnu.org/licenses/>.
  ************************************************************************/
 
-package de.Lathanael.Commands;
+package de.Lathanael.FC.Commands;
 
 import java.util.HashMap;
 
@@ -24,9 +24,9 @@ import org.bukkit.block.BlockState;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import de.Lathanael.FunCommands.FunCommands;
-import de.Lathanael.Tools.BlocksOld;
-import de.Lathanael.Tools.Utilities;
+import de.Lathanael.FC.FunCommands.FunCommands;
+import de.Lathanael.FC.Tools.BlocksOld;
+import de.Lathanael.FC.Tools.Utilities;
 
 import be.Balor.Manager.Commands.CommandArgs;
 import be.Balor.Manager.Commands.CoreCommand;

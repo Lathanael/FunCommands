@@ -15,7 +15,7 @@
  * along with FunCommands.  If not, see <http://www.gnu.org/licenses/>.
  ************************************************************************/
 
-package de.Lathanael.Tools;
+package de.Lathanael.FC.Tools;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
