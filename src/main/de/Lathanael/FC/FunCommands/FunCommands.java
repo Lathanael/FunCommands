@@ -121,7 +121,7 @@ public class FunCommands extends AbstractAdminCmdPlugin {
 		pm.registerEvent(Type.PLAYER_QUIT, fcPL, Priority.Monitor, this);
 		PluginDescriptionFile pdfFile = this.getDescription();
 		permissionLinker.registerAllPermParent();
-		ACLogger.info("[" + pdfFile.getName() +"] Enabled. (Version " + pdfFile.getVersion() + ")");
+		System.out.println("[" + pdfFile.getName() +"] Enabled. (Version " + pdfFile.getVersion() + ")");
 	}
 
 	/*
@@ -131,6 +131,6 @@ public class FunCommands extends AbstractAdminCmdPlugin {
 	 */
 	public void onDisable() {
 		PluginDescriptionFile pdfFile = this.getDescription();
-		ACLogger.info("[" + pdfFile.getName() +"] Disabled. (Version " + pdfFile.getVersion() + ")");
+		System.out.println("[" + pdfFile.getName() +"] Disabled. (Version " + pdfFile.getVersion() + ")");
 	}
 }
