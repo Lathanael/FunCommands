@@ -1,5 +1,5 @@
 name: FunCommands
-main: de.Lathanael.FunCommands.FunCommands
+main: de.Lathanael.FC.FunCommands.FunCommands
 version: ${project.version} (BUILD ${git.build.time})
 auhor: Lathanael
 depend: [AdminCmd]
