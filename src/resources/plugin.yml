@@ -1,7 +1,7 @@
 name: FunCommands
 main: de.Lathanael.FC.FunCommands.FunCommands
 version: ${project.version} (BUILD ${git.build.time})
-auhor: Lathanael
+author: Lathanael
 depend: [AdminCmd]
 description: >
              Fun commands for AdminCmd.
