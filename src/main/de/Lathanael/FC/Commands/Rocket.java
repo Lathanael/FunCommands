@@ -57,9 +57,9 @@ public class Rocket extends CoreCommand {
 			return;
 		float power = 0;
 		HashMap<String, String> replace = new HashMap<String, String>();
-		replace.put("target", target.getName());
+		replace.put("target", Utils.getPlayerName(target));
 		if (Utils.isPlayer(sender, false))
-			replace.put("sender", sender.getName());
+			replace.put("sender", Utils.getPlayerName((Player) sender));
 		else
 			replace.put("sender", "Server Admin");
 		if (args.hasFlag('h')) {

@@ -17,11 +17,16 @@
 
 package de.Lathanael.FC.Listeners;
 
+import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerListener;
 import org.bukkit.event.player.PlayerQuitEvent;
 
+import be.Balor.Player.ACPlayer;
+
 import de.Lathanael.FC.FunCommands.FunCommands;
+import de.Lathanael.FC.FunCommands.Configuration;
 
 /**
  * @author Lathanael (aka Philippe Leipold)
@@ -33,15 +38,36 @@ public class FCPlayerListener extends PlayerListener {
 
 	}
 
+	public void onPlayerJoin(PlayerJoinEvent event) {
+		Player player = event.getPlayer();
+		String displayName = null;
+		Object o = ACPlayer.getPlayer(player).getInformation("displayName");
+		if (o != null) {
+			displayName = (String) o;
+			player.setDisplayName(displayName);
+			FunCommands.players.put(displayName, player);
+		}
+	}
+
 	public void onPlayerKick(PlayerKickEvent event) {
 		String displayName = event.getPlayer().getDisplayName();
-		if (FunCommands.players.containsKey(displayName))
+		if (FunCommands.players.containsKey(displayName)) {
+			if (Configuration.getInstance().getConfBoolean("PersistentNames")) {
+				ACPlayer player = ACPlayer.getPlayer(event.getPlayer());
+				player.setInformation("displayName", displayName);
+			}
 			FunCommands.players.remove(displayName);
+		}
 	}
 
 	public void onPlayerQuit(PlayerQuitEvent event) {
 		String displayName = event.getPlayer().getDisplayName();
-		if (FunCommands.players.containsKey(displayName))
+		if (FunCommands.players.containsKey(displayName)) {
+			if (Configuration.getInstance().getConfBoolean("PersistentNames")) {
+				ACPlayer player = ACPlayer.getPlayer(event.getPlayer());
+				player.setInformation("displayName", displayName);
+			}
 			FunCommands.players.remove(displayName);
+		}
 	}
 }

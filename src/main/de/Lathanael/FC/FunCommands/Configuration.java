@@ -55,6 +55,7 @@ public class Configuration {
 		pluginConfig.addProperty("Slap.vHeight", 1);
 		pluginConfig.addProperty("Rocket.normalPower", 1.5);
 		pluginConfig.addProperty("Rocket.flagPower", 5);
+		pluginConfig.addProperty("PersistentNames", false);
 		pluginConfig.save();
 	}
 

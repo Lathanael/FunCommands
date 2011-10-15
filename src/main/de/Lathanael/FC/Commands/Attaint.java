@@ -79,7 +79,7 @@ public class Attaint extends CoreCommand {
 		replace.put("target", target.getName());
 		replace.put("name", args.getString(1));
 		if (Utils.isPlayer(sender, false))
-			replace.put("sender", sender.getName());
+			replace.put("sender", Utils.getPlayerName((Player) sender));
 		else
 			replace.put("sender", "Server Admin");
 

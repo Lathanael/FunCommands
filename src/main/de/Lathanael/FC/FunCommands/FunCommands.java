@@ -119,6 +119,7 @@ public class FunCommands extends AbstractAdminCmdPlugin {
 		pm = getServer().getPluginManager();
 		pm.registerEvent(Type.PLAYER_KICK, fcPL, Priority.Monitor, this);
 		pm.registerEvent(Type.PLAYER_QUIT, fcPL, Priority.Monitor, this);
+		pm.registerEvent(Type.PLAYER_JOIN, fcPL, Priority.Monitor, this);
 		PluginDescriptionFile pdfFile = this.getDescription();
 		permissionLinker.registerAllPermParent();
 		ACLogger.info("[" + pdfFile.getName() +"] Enabled. (Version " + pdfFile.getVersion() + ")");
