@@ -18,6 +18,8 @@
 package de.Lathanael.FC.FunCommands;
 
 import java.util.HashMap;
+import java.util.Map;
+
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event.Priority;
@@ -34,6 +36,7 @@ import de.Lathanael.FC.Listeners.FCPlayerListener;
 import de.Lathanael.FC.Tools.BlocksOld;
 import be.Balor.Manager.LocaleManager;
 import be.Balor.Manager.Permissions.PermParent;
+import be.Balor.Player.ACPlayer;
 import be.Balor.Tools.Debug.ACLogger;
 import be.Balor.Tools.Utils;
 import be.Balor.bukkit.AdminCmd.ACPluginManager;
@@ -131,6 +134,9 @@ public class FunCommands extends AbstractAdminCmdPlugin {
 	 * @see org.bukkit.plugin.Plugin#onDisable()
 	 */
 	public void onDisable() {
+		for (Map.Entry<String, Player> entry : players.entrySet())
+			ACPlayer.getPlayer(entry.getValue()).setInformation("displayName", entry.getKey());
+
 		PluginDescriptionFile pdfFile = this.getDescription();
 		ACLogger.info("[" + pdfFile.getName() +"] Disabled. (Version " + pdfFile.getVersion() + ")");
 	}
