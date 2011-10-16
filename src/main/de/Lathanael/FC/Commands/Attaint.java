@@ -30,6 +30,8 @@ import de.Lathanael.FC.FunCommands.FunCommands;
 import be.Balor.Manager.Commands.CommandArgs;
 import be.Balor.Manager.Commands.CoreCommand;
 import be.Balor.Manager.Permissions.PermissionManager;
+import be.Balor.Player.ACPlayer;
+import be.Balor.Tools.Type;
 import be.Balor.Tools.Utils;
 
 /**
@@ -87,8 +89,9 @@ public class Attaint extends CoreCommand {
 			replace.put("sender", "Server Admin");
 
 		target.setDisplayName(args.getString(1));
-		((CraftServer) target.getServer()).getHandle().sendAll(
-				new Packet201PlayerInfo(args.getString(1), true, 100));
+		if (!ACPlayer.getPlayer(target).hasPower(Type.INVISIBLE) || !ACPlayer.getPlayer(target).hasPower(Type.FAKEQUIT))
+			((CraftServer) target.getServer()).getHandle().sendAll(
+					new Packet201PlayerInfo(args.getString(1), true, 100));
 		if (!target.equals(sender)) {
 			Utils.sI18n(target, "attaintTarget", replace);
 			Utils.sI18n(sender, "attaintSender", replace);

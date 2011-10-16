@@ -27,6 +27,7 @@ import org.bukkit.event.player.PlayerListener;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import be.Balor.Player.ACPlayer;
+import be.Balor.Tools.Type;
 import be.Balor.Tools.Files.ObjectContainer;
 
 import de.Lathanael.FC.FunCommands.FunCommands;
@@ -48,8 +49,9 @@ public class FCPlayerListener extends PlayerListener {
 		ObjectContainer o = ACPlayer.getPlayer(player).getInformation("displayName");
 		if (o != null) {
 			displayName = o.getString();
-			((CraftServer) player.getServer()).getHandle().sendAll(
-					new Packet201PlayerInfo(displayName, true, 100));
+			if (!ACPlayer.getPlayer(player).hasPower(Type.INVISIBLE) || !ACPlayer.getPlayer(player).hasPower(Type.FAKEQUIT))
+				((CraftServer) player.getServer()).getHandle().sendAll(
+						new Packet201PlayerInfo(displayName, true, 100));
 			player.setDisplayName(displayName);
 			FunCommands.players.put(displayName, player);
 		}
