@@ -17,6 +17,9 @@
 
 package de.Lathanael.FC.Listeners;
 
+import net.minecraft.server.Packet201PlayerInfo;
+
+import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerKickEvent;
@@ -45,6 +48,8 @@ public class FCPlayerListener extends PlayerListener {
 		ObjectContainer o = ACPlayer.getPlayer(player).getInformation("displayName");
 		if (o != null) {
 			displayName = o.getString();
+			((CraftServer) player.getServer()).getHandle().sendAll(
+					new Packet201PlayerInfo(displayName, true, 100));
 			player.setDisplayName(displayName);
 			FunCommands.players.put(displayName, player);
 		}
