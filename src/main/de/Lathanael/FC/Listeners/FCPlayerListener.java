@@ -24,6 +24,7 @@ import org.bukkit.event.player.PlayerListener;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import be.Balor.Player.ACPlayer;
+import be.Balor.Tools.Files.ObjectContainer;
 
 import de.Lathanael.FC.FunCommands.FunCommands;
 import de.Lathanael.FC.FunCommands.Configuration;
@@ -41,9 +42,9 @@ public class FCPlayerListener extends PlayerListener {
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		Player player = event.getPlayer();
 		String displayName = null;
-		Object o = ACPlayer.getPlayer(player).getInformation("displayName");
+		ObjectContainer o = ACPlayer.getPlayer(player).getInformation("displayName");
 		if (o != null) {
-			displayName = (String) o;
+			displayName = o.getString();
 			player.setDisplayName(displayName);
 			FunCommands.players.put(displayName, player);
 		}
