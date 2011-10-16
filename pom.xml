@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>de.Lathanael</groupId>
   <artifactId>FunCommands</artifactId>
-  <version>1.3.1</version>
+  <version>1.4-SNAPSHOT</version>
   <scm>
         <connection>scm:git:git@github.com:Lathanael/FunCommands.git</connection>
         <url>scm:git:git@github.com:Lathanael/FunCommands.git</url>
@@ -221,7 +221,7 @@
     <dependency>
         <groupId>be.Balor</groupId>
         <artifactId>AdminCmd</artifactId>
-        <version>5.9.2-SNAPSHOT</version>
+        <version>5.10.0-SNAPSHOT</version>
         <type>jar</type>
         <scope>provided</scope>
     </dependency>

@@ -19,7 +19,11 @@ package de.Lathanael.FC.Commands;
 
 import java.util.HashMap;
 
+import net.minecraft.server.Packet201PlayerInfo;
+
 import org.bukkit.command.CommandSender;
+import org.bukkit.craftbukkit.CraftServer;
+import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
 import de.Lathanael.FC.FunCommands.FunCommands;
@@ -84,6 +88,8 @@ public class Attaint extends CoreCommand {
 			replace.put("sender", "Server Admin");
 
 		target.setDisplayName(args.getString(1));
+		((CraftServer) target.getServer()).getHandle().sendAll(
+				new Packet201PlayerInfo(((CraftPlayer) target).getHandle().displayName, true, 100));
 		if (!target.equals(sender)) {
 			Utils.sI18n(target, "attaintTarget", replace);
 			Utils.sI18n(sender, "attaintSender", replace);
