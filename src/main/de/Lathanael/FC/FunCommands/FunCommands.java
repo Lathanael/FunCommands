@@ -109,6 +109,8 @@ public class FunCommands extends AbstractAdminCmdPlugin {
 		Utils.addLocale("rocketSender", ChatColor.DARK_AQUA + "You have been shot high into the air by " + ChatColor.GOLD
 				+ "%sender" + ChatColor.DARK_AQUA + "!");
 		Utils.addLocale("rocketYourself", ChatColor.DARK_AQUA + "You have shot yourself into the air!");
+		Utils.addLocale("joinMessage", ChatColor.YELLOW + "%name joined the game!");
+		Utils.addLocale("quitMessage", ChatColor.YELLOW + "%name left the game!");
 		LocaleManager.getInstance().save();
 	}
 
@@ -120,9 +122,9 @@ public class FunCommands extends AbstractAdminCmdPlugin {
 		players = new HashMap<String, Player>();
 		blockStates = new HashMap<Player, BlocksOld>();
 		pm = getServer().getPluginManager();
-		pm.registerEvent(Type.PLAYER_KICK, fcPL, Priority.Monitor, this);
-		pm.registerEvent(Type.PLAYER_QUIT, fcPL, Priority.Monitor, this);
-		pm.registerEvent(Type.PLAYER_JOIN, fcPL, Priority.Monitor, this);
+		pm.registerEvent(Type.PLAYER_KICK, fcPL, Priority.High, this);
+		pm.registerEvent(Type.PLAYER_QUIT, fcPL, Priority.High, this);
+		pm.registerEvent(Type.PLAYER_JOIN, fcPL, Priority.High, this);
 		PluginDescriptionFile pdfFile = this.getDescription();
 		permissionLinker.registerAllPermParent();
 		ACLogger.info("[" + pdfFile.getName() +"] Enabled. (Version " + pdfFile.getVersion() + ")");

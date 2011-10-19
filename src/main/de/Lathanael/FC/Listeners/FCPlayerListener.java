@@ -17,17 +17,23 @@
 
 package de.Lathanael.FC.Listeners;
 
+import java.util.HashMap;
+
 import net.minecraft.server.Packet201PlayerInfo;
+import net.minecraft.server.Packet29DestroyEntity;
 
 import org.bukkit.craftbukkit.CraftServer;
+import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerListener;
 import org.bukkit.event.player.PlayerQuitEvent;
 
+import be.Balor.Manager.Permissions.Plugins.SuperPermissions;
 import be.Balor.Player.ACPlayer;
 import be.Balor.Tools.Type;
+import be.Balor.Tools.Utils;
 import be.Balor.Tools.Files.ObjectContainer;
 
 import de.Lathanael.FC.FunCommands.FunCommands;
@@ -49,11 +55,19 @@ public class FCPlayerListener extends PlayerListener {
 		ObjectContainer o = ACPlayer.getPlayer(player).getInformation("displayName");
 		if (o != null) {
 			displayName = o.getString();
-			if (!ACPlayer.getPlayer(player).hasPower(Type.INVISIBLE) || !ACPlayer.getPlayer(player).hasPower(Type.FAKEQUIT))
+			player.setDisplayName(displayName);
+			if (!ACPlayer.getPlayer(player).hasPower(Type.INVISIBLE) || !ACPlayer.getPlayer(player).hasPower(Type.FAKEQUIT)) {
+				((CraftServer) player.getServer()).getHandle().sendAll(
+						new Packet201PlayerInfo(player.getName(), false, 100));
 				((CraftServer) player.getServer()).getHandle().sendAll(
 						new Packet201PlayerInfo(displayName, true, 100));
-			player.setDisplayName(displayName);
+			}
 			FunCommands.players.put(displayName, player);
+			if (!SuperPermissions.isApiSet()) {
+				HashMap<String, String> replace = new HashMap<String, String>();
+				replace.put("name", Utils.getPlayerName(player));
+				event.setJoinMessage(Utils.I18n("joinMessage", replace));
+			}
 		}
 	}
 
@@ -76,6 +90,11 @@ public class FCPlayerListener extends PlayerListener {
 				player.setInformation("displayName", displayName);
 			}
 			FunCommands.players.remove(displayName);
+			if (!SuperPermissions.isApiSet()) {
+				HashMap<String, String> replace = new HashMap<String, String>();
+				replace.put("name", Utils.getPlayerName(event.getPlayer()));
+				event.setQuitMessage(Utils.I18n("quitMessage", replace));
+			}
 		}
 	}
 }

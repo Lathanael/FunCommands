@@ -20,8 +20,9 @@ package de.Lathanael.FC.FunCommands;
 import java.io.File;
 import java.io.IOException;
 
+import be.Balor.Tools.Utils;
 import be.Balor.Tools.Debug.ACLogger;
-import be.Balor.Tools.Configuration.ExtendedConfiguration;
+import be.Balor.Tools.Configuration.File.ExtendedConfiguration;
 
 /**
  * @authors Lathanael, Balor
@@ -45,18 +46,21 @@ public class Configuration {
 	public void setInstance(FunCommands instance) {
 		String directory = instance.getDataFolder().getPath();
 		File file = createConfFile(directory, "config.yml");
-		pluginConfig = new ExtendedConfiguration(file);
-		pluginConfig.load();
-		pluginConfig.addProperty("Slap.normalPower", 1.1);
-		pluginConfig.addProperty("Slap.normalHeight", 0);
-		pluginConfig.addProperty("Slap.hPower", 2);
-		pluginConfig.addProperty("Slap.hHeight", 0.5);
-		pluginConfig.addProperty("Slap.vPower", 3);
-		pluginConfig.addProperty("Slap.vHeight", 1);
-		pluginConfig.addProperty("Rocket.normalPower", 1.5);
-		pluginConfig.addProperty("Rocket.flagPower", 5);
-		pluginConfig.addProperty("PersistentNames", false);
-		pluginConfig.save();
+		pluginConfig = ExtendedConfiguration.loadConfiguration(file);
+		pluginConfig.add("Slap.normalPower", 1.1);
+		pluginConfig.add("Slap.normalHeight", 0);
+		pluginConfig.add("Slap.hPower", 2);
+		pluginConfig.add("Slap.hHeight", 0.5);
+		pluginConfig.add("Slap.vPower", 3);
+		pluginConfig.add("Slap.vHeight", 1);
+		pluginConfig.add("Rocket.normalPower", 1.5);
+		pluginConfig.add("Rocket.flagPower", 5);
+		pluginConfig.add("PersistentNames", false);
+		try {
+			pluginConfig.save();
+		} catch(IOException exception) {
+			exception.printStackTrace();
+		}
 	}
 
 	/**
@@ -108,8 +112,12 @@ public class Configuration {
 	 *             The value of the node
 	 */
 	public void setConfProperty(String path, Object obj) {
-		pluginConfig.setProperty(path, obj);
-		pluginConfig.save();
+		pluginConfig.set(path, obj);
+		try {
+			pluginConfig.save();
+		} catch(IOException exception) {
+			exception.printStackTrace();
+		}
 	}
 
 	/**
