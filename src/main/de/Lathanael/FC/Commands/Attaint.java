@@ -93,12 +93,14 @@ public class Attaint extends CoreCommand {
 
 		target.setDisplayName(args.getString(1));
 		if (!ACPlayer.getPlayer(target).hasPower(Type.INVISIBLE) || !ACPlayer.getPlayer(target).hasPower(Type.FAKEQUIT)) {
+			EntityPlayer craftPlayer = ((CraftPlayer) target).getHandle();
 			((CraftServer) target.getServer()).getHandle().sendAll(
-					new Packet201PlayerInfo(target.getDisplayName(), false, 100));
+					new Packet201PlayerInfo(craftPlayer.listName, false, 100));
+			craftPlayer.listName = args.getString(1);
 			((CraftServer) target.getServer()).getHandle().sendAll(
-					new Packet201PlayerInfo(args.getString(1), true, 100));
+					new Packet201PlayerInfo(craftPlayer.listName, true, 100));
 		}
-		EntityPlayer craftFrom = ((CraftPlayer) target).getHandle();
+
 		if (!target.equals(sender)) {
 			Utils.sI18n(target, "attaintTarget", replace);
 			Utils.sI18n(sender, "attaintSender", replace);

@@ -19,8 +19,8 @@ package de.Lathanael.FC.Listeners;
 
 import java.util.HashMap;
 
+import net.minecraft.server.EntityPlayer;
 import net.minecraft.server.Packet201PlayerInfo;
-import net.minecraft.server.Packet29DestroyEntity;
 
 import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.craftbukkit.entity.CraftPlayer;
@@ -55,18 +55,22 @@ public class FCPlayerListener extends PlayerListener {
 		ObjectContainer o = ACPlayer.getPlayer(player).getInformation("displayName");
 		if (o != null) {
 			displayName = o.getString();
-			player.setDisplayName(displayName);
-			if (!ACPlayer.getPlayer(player).hasPower(Type.INVISIBLE) || !ACPlayer.getPlayer(player).hasPower(Type.FAKEQUIT)) {
-				((CraftServer) player.getServer()).getHandle().sendAll(
-						new Packet201PlayerInfo(player.getName(), false, 100));
-				((CraftServer) player.getServer()).getHandle().sendAll(
-						new Packet201PlayerInfo(displayName, true, 100));
-			}
-			FunCommands.players.put(displayName, player);
-			if (!SuperPermissions.isApiSet()) {
-				HashMap<String, String> replace = new HashMap<String, String>();
-				replace.put("name", Utils.getPlayerName(player));
-				event.setJoinMessage(Utils.I18n("joinMessage", replace));
+			if (displayName != null) {
+				player.setDisplayName(displayName);
+				if (!ACPlayer.getPlayer(player).hasPower(Type.INVISIBLE) || !ACPlayer.getPlayer(player).hasPower(Type.FAKEQUIT)) {
+					EntityPlayer craftPlayer = ((CraftPlayer) player).getHandle();
+					((CraftServer) player.getServer()).getHandle().sendAll(
+							new Packet201PlayerInfo(craftPlayer.listName, false, 100));
+					craftPlayer.listName = displayName;
+					((CraftServer) player.getServer()).getHandle().sendAll(
+							new Packet201PlayerInfo(craftPlayer.listName, true, 100));
+				}
+				FunCommands.players.put(displayName, player);
+				if (!SuperPermissions.isApiSet()) {
+					HashMap<String, String> replace = new HashMap<String, String>();
+					replace.put("name", Utils.getPlayerName(player));
+					event.setJoinMessage(Utils.I18n("joinMessage", replace));
+				}
 			}
 		}
 	}
