@@ -65,10 +65,7 @@ public class Attaint extends CoreCommand {
 		target = Utils.getUser(sender, newArgs, permNode, 0, true);
 		if (target == null)
 			return;
-		if (args.length < 2) {
-			target.setDisplayName(target.getName());
-			return;
-		}
+
 		HashMap<String, String> replace = new HashMap<String, String>();
 		if (args.hasFlag('c')) {
 			if (!(PermissionManager.hasPerm(sender, "admincmd.fun.attaint.check")))
@@ -80,6 +77,10 @@ public class Attaint extends CoreCommand {
 		}
 		if (FunCommands.players.containsKey(args.getString(0)))
 			FunCommands.players.remove(args.getString(0));
+		if (args.length < 2) {
+			target.setDisplayName(target.getName());
+			return;
+		}
 		FunCommands.players.put(args.getString(1), target);
 		replace.put("target", target.getName());
 		replace.put("name", args.getString(1));
