@@ -17,8 +17,6 @@
 
 package de.Lathanael.FC.Listeners;
 
-import java.util.HashMap;
-
 import net.minecraft.server.EntityPlayer;
 import net.minecraft.server.Packet201PlayerInfo;
 
@@ -30,10 +28,8 @@ import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerListener;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-import be.Balor.Manager.Permissions.Plugins.SuperPermissions;
 import be.Balor.Player.ACPlayer;
 import be.Balor.Tools.Type;
-import be.Balor.Tools.Utils;
 import be.Balor.Tools.Files.ObjectContainer;
 
 import de.Lathanael.FC.FunCommands.FunCommands;
@@ -66,11 +62,6 @@ public class FCPlayerListener extends PlayerListener {
 							new Packet201PlayerInfo(craftPlayer.listName, true, 100));
 				}
 				FunCommands.players.put(displayName, player);
-				if (!SuperPermissions.isApiSet()) {
-					HashMap<String, String> replace = new HashMap<String, String>();
-					replace.put("name", Utils.getPlayerName(player));
-					event.setJoinMessage(Utils.I18n("joinMessage", replace));
-				}
 			}
 		}
 	}
@@ -94,11 +85,6 @@ public class FCPlayerListener extends PlayerListener {
 				player.setInformation("displayName", displayName);
 			}
 			FunCommands.players.remove(displayName);
-			if (!SuperPermissions.isApiSet()) {
-				HashMap<String, String> replace = new HashMap<String, String>();
-				replace.put("name", Utils.getPlayerName(event.getPlayer()));
-				event.setQuitMessage(Utils.I18n("quitMessage", replace));
-			}
 		}
 	}
 }

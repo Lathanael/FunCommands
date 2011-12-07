@@ -109,8 +109,6 @@ public class FunCommands extends AbstractAdminCmdPlugin {
 		Utils.addLocale("rocketSender", ChatColor.DARK_AQUA + "You have been shot high into the air by " + ChatColor.GOLD
 				+ "%sender" + ChatColor.DARK_AQUA + "!");
 		Utils.addLocale("rocketYourself", ChatColor.DARK_AQUA + "You have shot yourself into the air!");
-		Utils.addLocale("joinMessage", ChatColor.YELLOW + "%name joined the game!");
-		Utils.addLocale("quitMessage", ChatColor.YELLOW + "%name left the game!");
 		LocaleManager.getInstance().save();
 	}
 
