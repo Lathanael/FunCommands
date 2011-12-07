@@ -19,13 +19,7 @@ package de.Lathanael.FC.Commands;
 
 import java.util.HashMap;
 
-import net.minecraft.server.EntityPlayer;
-import net.minecraft.server.Packet201PlayerInfo;
-import net.minecraft.server.Packet29DestroyEntity;
-
 import org.bukkit.command.CommandSender;
-import org.bukkit.craftbukkit.CraftServer;
-import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
 import de.Lathanael.FC.FunCommands.FunCommands;
@@ -93,12 +87,7 @@ public class Attaint extends CoreCommand {
 
 		target.setDisplayName(args.getString(1));
 		if (!ACPlayer.getPlayer(target).hasPower(Type.INVISIBLE) || !ACPlayer.getPlayer(target).hasPower(Type.FAKEQUIT)) {
-			EntityPlayer craftPlayer = ((CraftPlayer) target).getHandle();
-			((CraftServer) target.getServer()).getHandle().sendAll(
-					new Packet201PlayerInfo(craftPlayer.listName, false, 100));
-			craftPlayer.listName = args.getString(1);
-			((CraftServer) target.getServer()).getHandle().sendAll(
-					new Packet201PlayerInfo(craftPlayer.listName, true, 100));
+			target.setPlayerListName(args.getString(1));
 		}
 
 		if (!target.equals(sender)) {
