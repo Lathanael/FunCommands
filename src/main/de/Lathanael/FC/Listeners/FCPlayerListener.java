@@ -17,11 +17,6 @@
 
 package de.Lathanael.FC.Listeners;
 
-import net.minecraft.server.EntityPlayer;
-import net.minecraft.server.Packet201PlayerInfo;
-
-import org.bukkit.craftbukkit.CraftServer;
-import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerKickEvent;
@@ -34,6 +29,7 @@ import be.Balor.Tools.Files.ObjectContainer;
 
 import de.Lathanael.FC.FunCommands.FunCommands;
 import de.Lathanael.FC.FunCommands.Configuration;
+import de.Lathanael.FC.Tools.Utilities;
 
 /**
  * @author Lathanael (aka Philippe Leipold)
@@ -54,15 +50,11 @@ public class FCPlayerListener extends PlayerListener {
 			if (displayName != null) {
 				player.setDisplayName(displayName);
 				if (!ACPlayer.getPlayer(player).hasPower(Type.INVISIBLE) || !ACPlayer.getPlayer(player).hasPower(Type.FAKEQUIT)) {
-					EntityPlayer craftPlayer = ((CraftPlayer) player).getHandle();
-					((CraftServer) player.getServer()).getHandle().sendAll(
-							new Packet201PlayerInfo(craftPlayer.listName, false, 100));
-					craftPlayer.listName = displayName;
-					((CraftServer) player.getServer()).getHandle().sendAll(
-							new Packet201PlayerInfo(craftPlayer.listName, true, 100));
+					player.setPlayerListName(displayName);
+					Utilities.createNewPlayerShell(player, displayName);
 				}
-				FunCommands.players.put(displayName, player);
 			}
+			FunCommands.players.put(displayName, player);
 		}
 	}
 

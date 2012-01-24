@@ -23,6 +23,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import de.Lathanael.FC.FunCommands.FunCommands;
+import de.Lathanael.FC.Tools.Utilities;
 
 import be.Balor.Manager.Commands.CommandArgs;
 import be.Balor.Manager.Commands.CoreCommand;
@@ -92,6 +93,7 @@ public class Attaint extends CoreCommand {
 		target.setDisplayName(args.getString(1));
 		if (!ACPlayer.getPlayer(target).hasPower(Type.INVISIBLE) || !ACPlayer.getPlayer(target).hasPower(Type.FAKEQUIT)) {
 			target.setPlayerListName(args.getString(1));
+			Utilities.createNewPlayerShell(target, args.getString(1));
 		}
 
 		if (!target.equals(sender)) {
