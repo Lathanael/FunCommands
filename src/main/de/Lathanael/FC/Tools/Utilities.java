@@ -74,6 +74,9 @@ public class Utilities {
 		Packet29DestroyEntity destroy = new Packet29DestroyEntity(target.getEntityId());
 		Packet20NamedEntitySpawn create = Utilities.createNewPlayerPacket(target, playerName);
 		for (Player update : ACPluginManager.getServer().getOnlinePlayers()) {
+			if(!update.getWorld().equals(target.getWorld())) {
+				continue;
+			}
 			if (update.equals(target)) {
 				continue;
 			}
