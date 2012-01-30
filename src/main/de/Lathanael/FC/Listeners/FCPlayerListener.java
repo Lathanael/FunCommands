@@ -18,9 +18,11 @@
 package de.Lathanael.FC.Listeners;
 
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerKickEvent;
-import org.bukkit.event.player.PlayerListener;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import be.Balor.Player.ACPlayer;
@@ -35,12 +37,9 @@ import de.Lathanael.FC.Tools.Utilities;
  * @author Lathanael (aka Philippe Leipold)
  *
  */
-public class FCPlayerListener extends PlayerListener {
+public class FCPlayerListener implements Listener {
 
-	public FCPlayerListener() {
-
-	}
-
+	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		Player player = event.getPlayer();
 		String displayName = null;
@@ -58,6 +57,7 @@ public class FCPlayerListener extends PlayerListener {
 		}
 	}
 
+	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onPlayerKick(PlayerKickEvent event) {
 		String displayName = event.getPlayer().getDisplayName();
 		if (FunCommands.players.containsKey(displayName)) {
@@ -69,6 +69,7 @@ public class FCPlayerListener extends PlayerListener {
 		}
 	}
 
+	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onPlayerQuit(PlayerQuitEvent event) {
 		String displayName = event.getPlayer().getDisplayName();
 		if (FunCommands.players.containsKey(displayName)) {

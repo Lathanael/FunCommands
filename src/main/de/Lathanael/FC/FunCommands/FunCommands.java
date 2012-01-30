@@ -22,8 +22,6 @@ import java.util.Map;
 
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event.Priority;
-import org.bukkit.event.Event.Type;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 
@@ -52,8 +50,6 @@ public class FunCommands extends AbstractAdminCmdPlugin {
 	public static HashMap<Player, BlocksOld> blockStates;
 	public static HashMap<String, Player> players;
 	private Configuration config;
-	private static FCPlayerListener fcPL = new FCPlayerListener();
-	private static PluginManager pm;
 
 	/**
 	 * @param name
@@ -119,10 +115,8 @@ public class FunCommands extends AbstractAdminCmdPlugin {
 		config.setInstance(this);
 		players = new HashMap<String, Player>();
 		blockStates = new HashMap<Player, BlocksOld>();
-		pm = getServer().getPluginManager();
-		pm.registerEvent(Type.PLAYER_KICK, fcPL, Priority.High, this);
-		pm.registerEvent(Type.PLAYER_QUIT, fcPL, Priority.High, this);
-		pm.registerEvent(Type.PLAYER_JOIN, fcPL, Priority.High, this);
+		final PluginManager pm = getServer().getPluginManager();
+		pm.registerEvents(new FCPlayerListener(), this);
 		PluginDescriptionFile pdfFile = this.getDescription();
 		permissionLinker.registerAllPermParent();
 		ACLogger.info("[" + pdfFile.getName() +"] Enabled. (Version " + pdfFile.getVersion() + ")");
