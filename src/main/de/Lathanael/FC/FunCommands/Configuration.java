@@ -20,8 +20,8 @@ package de.Lathanael.FC.FunCommands;
 import java.io.File;
 import java.io.IOException;
 
-import be.Balor.Tools.Debug.ACLogger;
 import be.Balor.Tools.Configuration.File.ExtendedConfiguration;
+import be.Balor.bukkit.AdminCmd.ACPluginManager;
 
 /**
  * @authors Lathanael, Balor
@@ -130,7 +130,8 @@ public class Configuration {
 				file.createNewFile();
 			}
 			catch (IOException ex){
-				ACLogger.info("[FunCommands] Could not create file: " + name);
+				ACPluginManager.getPluginInstance("FunCommands").getLogger()
+					.info("[FunCommands] Could not create file: " + name);
 			}
 		}
 		return file;
