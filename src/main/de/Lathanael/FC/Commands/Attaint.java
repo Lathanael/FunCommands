@@ -42,7 +42,7 @@ public class Attaint extends CoreCommand {
 	 *
 	 */
 	public Attaint() {
-		super("ac_attaint", "admincmd.fun.attaint", "FunCommands");
+		super("fc_attaint", "admincmd.fun.attaint", "FunCommands");
 		other = true;
 	}
 

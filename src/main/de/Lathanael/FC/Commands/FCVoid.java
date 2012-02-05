@@ -37,13 +37,13 @@ import be.Balor.bukkit.AdminCmd.ACPluginManager;
  * @author Lathanael (aka Philippe Leipold)
  *
  */
-public class ACVoid extends CoreCommand {
+public class FCVoid extends CoreCommand {
 
 	/**
 	 *
 	 */
-	public ACVoid() {
-		super("ac_void", "admincmd.fun.void", "FunCommands");
+	public FCVoid() {
+		super("FC_void", "admincmd.fun.void", "FunCommands");
 		other = true;
 	}
 

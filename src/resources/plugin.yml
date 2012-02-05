@@ -7,23 +7,23 @@ description: >
              Fun commands for AdminCmd.
 
 commands:
-    ac_slap:
+    fc_slap:
         description: Slaps the provided player, flags determine how hard.
         aliases: [slap]
         usage: /<command> <-flags> [player]
-    ac_rocket:
+    fc_rocket:
         description: Shoots the provided player high into the air.
         aliases: [rocket]
         usage: /<command> <-flags> [player]
-    ac_attaint:
+    fc_attaint:
         description: Attaint the player by changing his Displayname.
         aliases: [attaint, nick]
         usage: /<command> [player] [DispName]
-    ac_entomb:
+    fc_entomb:
         description: Entomb a player in a cube of defined material, the flag -u removes the cube.
         aliases: [entomb]
         usage: /<command> <-flag> [player] <material>
-    ac_void:
+    fc_void:
         description: Drop a player into the VOID, after his death the hole will be closed.
         aliases: [void]
         usage: /<command> [player]

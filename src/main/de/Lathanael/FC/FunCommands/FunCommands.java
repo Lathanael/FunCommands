@@ -25,9 +25,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 
-import de.Lathanael.FC.Commands.ACVoid;
 import de.Lathanael.FC.Commands.Attaint;
 import de.Lathanael.FC.Commands.Entomb;
+import de.Lathanael.FC.Commands.FCVoid;
 import de.Lathanael.FC.Commands.Rocket;
 import de.Lathanael.FC.Commands.Slap;
 import de.Lathanael.FC.Listeners.FCPlayerListener;
@@ -63,7 +63,7 @@ public class FunCommands extends AbstractAdminCmdPlugin {
 		ACPluginManager.registerCommand(Slap.class);
 		ACPluginManager.registerCommand(Rocket.class);
 		ACPluginManager.registerCommand(Entomb.class);
-		ACPluginManager.registerCommand(ACVoid.class);
+		ACPluginManager.registerCommand(FCVoid.class);
 		ACPluginManager.registerCommand(Attaint.class);
 	}
 

@@ -38,7 +38,7 @@ public class Rocket extends CoreCommand {
 	 *
 	 */
 	public Rocket() {
-		super("ac_rocket", "admincmd.fun.rocket", "FunCommands");
+		super("fc_rocket", "admincmd.fun.rocket", "FunCommands");
 		other = true;
 	}
 
