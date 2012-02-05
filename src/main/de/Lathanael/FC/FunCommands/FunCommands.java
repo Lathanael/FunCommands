@@ -35,7 +35,6 @@ import de.Lathanael.FC.Tools.BlocksOld;
 import be.Balor.Manager.LocaleManager;
 import be.Balor.Manager.Permissions.PermParent;
 import be.Balor.Player.ACPlayer;
-import be.Balor.Tools.Debug.ACLogger;
 import be.Balor.Tools.Utils;
 import be.Balor.bukkit.AdminCmd.ACPluginManager;
 import be.Balor.bukkit.AdminCmd.AbstractAdminCmdPlugin;
@@ -119,7 +118,7 @@ public class FunCommands extends AbstractAdminCmdPlugin {
 		pm.registerEvents(new FCPlayerListener(), this);
 		PluginDescriptionFile pdfFile = this.getDescription();
 		permissionLinker.registerAllPermParent();
-		ACLogger.info("[" + pdfFile.getName() +"] Enabled. (Version " + pdfFile.getVersion() + ")");
+		getLogger().info("Enabled. (Version " + pdfFile.getVersion() + ")");
 	}
 
 	/*
@@ -132,6 +131,6 @@ public class FunCommands extends AbstractAdminCmdPlugin {
 			ACPlayer.getPlayer(entry.getValue()).setInformation("displayName", entry.getKey());
 
 		PluginDescriptionFile pdfFile = this.getDescription();
-		ACLogger.info("[" + pdfFile.getName() +"] Disabled. (Version " + pdfFile.getVersion() + ")");
+		getLogger().info("Disabled. (Version " + pdfFile.getVersion() + ")");
 	}
 }
