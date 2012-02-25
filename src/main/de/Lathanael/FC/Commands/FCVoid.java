@@ -43,7 +43,7 @@ public class FCVoid extends CoreCommand {
 	 *
 	 */
 	public FCVoid() {
-		super("FC_void", "admincmd.fun.void", "FunCommands");
+		super("FC_void", "fun.void", "FunCommands");
 		other = true;
 	}
 

@@ -42,7 +42,7 @@ public class Attaint extends CoreCommand {
 	 *
 	 */
 	public Attaint() {
-		super("fc_attaint", "admincmd.fun.attaint", "FunCommands");
+		super("fc_attaint", "fun.attaint", "FunCommands");
 		other = true;
 	}
 
@@ -69,7 +69,7 @@ public class Attaint extends CoreCommand {
 
 		HashMap<String, String> replace = new HashMap<String, String>();
 		if (args.hasFlag('c')) {
-			if (!(PermissionManager.hasPerm(sender, "admincmd.fun.attaint.check")))
+			if (!(PermissionManager.hasPerm(sender, "fun.attaint.check")))
 				return;
 			replace.put("dname", target.getDisplayName());
 			replace.put("name", target.getName());
@@ -119,7 +119,7 @@ public class Attaint extends CoreCommand {
 	 */
 	@Override
 	public void registerBukkitPerm() {
-		plugin.getPermissionLinker().addPermChild("admincmd.fun.attaint.check");
+		plugin.getPermissionLinker().addPermChild("fun.attaint.check");
 		super.registerBukkitPerm();
 	}
 }

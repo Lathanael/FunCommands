@@ -68,8 +68,7 @@ public class FunCommands extends AbstractAdminCmdPlugin {
 
 	@Override
 	protected void registerPermParents() {
-		permissionLinker.addPermParent(new PermParent("admincmd.fun.*"));
-		permissionLinker.setMajorPerm(new PermParent("admincmd.*"));
+		permissionLinker.setMajorPerm(new PermParent("fun.*"));
 	}
 
 	@Override
