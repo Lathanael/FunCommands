@@ -37,6 +37,7 @@ import be.Balor.Manager.LocaleManager;
 import be.Balor.Manager.Permissions.PermParent;
 import be.Balor.Player.ACPlayer;
 import be.Balor.Tools.Utils;
+import be.Balor.Tools.Egg.EggTypeClassLoader;
 import be.Balor.bukkit.AdminCmd.ACPluginManager;
 import be.Balor.bukkit.AdminCmd.AbstractAdminCmdPlugin;
 
@@ -120,6 +121,7 @@ public class FunCommands extends AbstractAdminCmdPlugin {
 		pm.registerEvents(new FCPlayerListener(), this);
 		PluginDescriptionFile pdfFile = this.getDescription();
 		permissionLinker.registerAllPermParent();
+		EggTypeClassLoader.addPackage(this, "de.Lathanael.FC.Eggs");
 		getLogger().info("Enabled. (Version " + pdfFile.getVersion() + ")");
 	}
 
