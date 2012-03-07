@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
@@ -47,6 +48,7 @@ import be.Balor.bukkit.AdminCmd.AbstractAdminCmdPlugin;
 public class FunCommands extends AbstractAdminCmdPlugin {
 
 	public static HashMap<Player, BlocksOld> blockStates;
+	public static HashMap<Location, BlocksOld> blockLocStates;
 	public static HashMap<String, Player> players;
 	private Configuration config;
 
@@ -113,6 +115,7 @@ public class FunCommands extends AbstractAdminCmdPlugin {
 		config.setInstance(this);
 		players = new HashMap<String, Player>();
 		blockStates = new HashMap<Player, BlocksOld>();
+		blockLocStates = new HashMap<Location, BlocksOld>();
 		final PluginManager pm = getServer().getPluginManager();
 		pm.registerEvents(new FCPlayerListener(), this);
 		PluginDescriptionFile pdfFile = this.getDescription();

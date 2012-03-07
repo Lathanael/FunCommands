@@ -20,18 +20,15 @@ package de.Lathanael.FC.Commands;
 import java.util.HashMap;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.BlockState;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import de.Lathanael.FC.FunCommands.FunCommands;
 import de.Lathanael.FC.Tools.BlocksOld;
 import de.Lathanael.FC.Tools.Utilities;
 
 import be.Balor.Manager.Commands.CommandArgs;
 import be.Balor.Manager.Commands.CoreCommand;
 import be.Balor.Tools.Utils;
-import be.Balor.bukkit.AdminCmd.ACPluginManager;
 
 /**
  * @author Lathanael (aka Philippe Leipold)
@@ -64,20 +61,8 @@ public class FCVoid extends CoreCommand {
 		Material mat = null;
 		BlocksOld states = new BlocksOld();
 		mat = Material.AIR;
-
 		Location loc = target.getLocation();
-		for (int i = loc.getBlock().getY(); i >= -150; --i) {
-			Utilities.changeBlock(sender, loc, mat, states, 0, i, 0);
-			Utilities.changeBlock(sender, loc, mat, states, 1, i, 0);
-			Utilities.changeBlock(sender, loc, mat, states, 0, i, 1);
-			Utilities.changeBlock(sender, loc, mat, states, 1, i, 1);
-			Utilities.changeBlock(sender, loc, mat, states, -1, i, 0);
-			Utilities.changeBlock(sender, loc, mat, states, 0, i, -1);
-			Utilities.changeBlock(sender, loc, mat, states, -1, i, 1);
-			Utilities.changeBlock(sender, loc, mat, states, 1, i, -1);
-			Utilities.changeBlock(sender, loc, mat, states, -1, i, -1);
-		}
-		FunCommands.blockStates.put(target, states);
+		Utilities.createVoid(sender, target, loc, mat, states, -150);
 		HashMap<String, String> replace = new HashMap<String, String>();
 		replace.put("target", Utils.getPlayerName(target));
 		if (Utils.isPlayer(sender, false))
@@ -90,18 +75,7 @@ public class FCVoid extends CoreCommand {
 		} else {
 			Utils.sI18n(sender, "voidYourself", replace);
 		}
-		final Player playerCopy = target;
-		FunCommands instance = (FunCommands) ACPluginManager.getPluginInstance("FunCommands");
-		instance.getServer().getScheduler().scheduleSyncDelayedTask(instance,
-				new Runnable() {
-					public void run() {
-						BlocksOld states = FunCommands.blockStates.get(playerCopy);
-						for (BlockState state : states.getStates())
-							state.update(true);
-						FunCommands.blockStates.remove(playerCopy);
-					}
-				},
-				200L);
+		Utilities.undoVoid(target);
 	}
 
 	/*

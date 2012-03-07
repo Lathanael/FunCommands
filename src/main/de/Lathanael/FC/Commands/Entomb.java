@@ -74,17 +74,7 @@ public class Entomb extends CoreCommand {
 		if (mat.isNull())
 			return;
 		Location loc = target.getLocation();
-		Utilities.changeBlock(sender, loc, mat.getMaterial(), states, 1, 0, 0);
-		Utilities.changeBlock(sender, loc, mat.getMaterial(), states, -1, 0, 0);
-		Utilities.changeBlock(sender, loc, mat.getMaterial(), states, 0, 0, 1);
-		Utilities.changeBlock(sender, loc, mat.getMaterial(), states, 0, 0, -1);
-		Utilities.changeBlock(sender, loc, mat.getMaterial(), states, 1, 1, 0);
-		Utilities.changeBlock(sender, loc, mat.getMaterial(), states, -1, 1, 0);
-		Utilities.changeBlock(sender, loc, mat.getMaterial(), states, 0, 1, 1);
-		Utilities.changeBlock(sender, loc, mat.getMaterial(), states, 0, 1, -1);
-		Utilities.changeBlock(sender, loc, mat.getMaterial(), states, 0, -1, 0);
-		Utilities.changeBlock(sender, loc, mat.getMaterial(), states, 0, 2, 0);
-		FunCommands.blockStates.put(target, states);
+		Utilities.entomb(sender, target, loc, mat.getMaterial(), states);
 		HashMap<String, String> replace = new HashMap<String, String>();
 		replace.put("target", Utils.getPlayerName(target));
 		if (Utils.isPlayer(sender, false))
