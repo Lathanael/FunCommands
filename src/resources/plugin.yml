@@ -27,3 +27,11 @@ commands:
         description: Drop a player into the VOID, after his death the hole will be closed.
         aliases: [void]
         usage: /<command> [player]
+    fc_sacrifice:
+        description: Sacrifice a player. He will drop dead by no special means.
+        aliases: [sac, sacrifice]
+        usage: /<command> <-P player>
+    fc_barrage:
+        description: Hits the player with a barrage of arrows so he dies or sets him on fire until he dies
+        aliases: [barrage, bar]
+        usage: /<command> [arrow|fire] <-P player>

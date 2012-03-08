@@ -23,6 +23,13 @@
   				<include>**/*.properties</include>
   			</includes>
   		</resource>
+  		<resource>
+  			<targetPath>.</targetPath>
+  			<directory>${basedir}/src/resources/</directory>
+  			<includes>
+  				<include>*.txt</include>
+  			</includes>
+  		</resource>
   	</resources>
   	<plugins>
             <plugin>

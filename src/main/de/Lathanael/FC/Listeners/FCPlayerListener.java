@@ -21,8 +21,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerKickEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import be.Balor.Player.ACPlayer;
@@ -59,6 +61,7 @@ public class FCPlayerListener implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onPlayerKick(PlayerKickEvent event) {
+		FunCommands.onFire.remove(event.getPlayer());
 		String displayName = event.getPlayer().getDisplayName();
 		if (FunCommands.players.containsKey(displayName)) {
 			if (Configuration.getInstance().getConfBoolean("PersistentNames")) {
@@ -71,6 +74,7 @@ public class FCPlayerListener implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onPlayerQuit(PlayerQuitEvent event) {
+		FunCommands.onFire.remove(event.getPlayer());
 		String displayName = event.getPlayer().getDisplayName();
 		if (FunCommands.players.containsKey(displayName)) {
 			if (Configuration.getInstance().getConfBoolean("PersistentNames")) {
@@ -78,6 +82,19 @@ public class FCPlayerListener implements Listener {
 				player.setInformation("displayName", displayName);
 			}
 			FunCommands.players.remove(displayName);
+		}
+	}
+
+	@EventHandler(priority = EventPriority.HIGHEST)
+	public void onPlayerMove(PlayerMoveEvent event) {
+		if (FunCommands.onFire.contains(event.getPlayer()))
+			event.getPlayer().setFireTicks(100);
+	}
+
+	@EventHandler(priority = EventPriority.HIGHEST)
+	public void onPlayerDeath(PlayerDeathEvent event) {
+		if (FunCommands.onFire.contains(event.getEntity())) {
+			FunCommands.onFire.remove(event.getEntity());
 		}
 	}
 }

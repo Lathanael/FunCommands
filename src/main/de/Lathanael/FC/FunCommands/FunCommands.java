@@ -17,7 +17,12 @@
 
 package de.Lathanael.FC.FunCommands;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 import org.bukkit.ChatColor;
@@ -31,6 +36,7 @@ import de.Lathanael.FC.Commands.Entomb;
 import de.Lathanael.FC.Commands.FCVoid;
 import de.Lathanael.FC.Commands.Rocket;
 import de.Lathanael.FC.Commands.Slap;
+import de.Lathanael.FC.Listeners.FCChatListener;
 import de.Lathanael.FC.Listeners.FCPlayerListener;
 import de.Lathanael.FC.Tools.BlocksOld;
 import be.Balor.Manager.LocaleManager;
@@ -51,6 +57,7 @@ public class FunCommands extends AbstractAdminCmdPlugin {
 	public static HashMap<Player, BlocksOld> blockStates;
 	public static HashMap<Location, BlocksOld> blockLocStates;
 	public static HashMap<String, Player> players;
+	public static HashSet<Player> onFire;
 	private Configuration config;
 
 	/**
@@ -107,6 +114,25 @@ public class FunCommands extends AbstractAdminCmdPlugin {
 				+ "%sender" + ChatColor.DARK_AQUA + "!");
 		Utils.addLocale("rocketYourself", ChatColor.DARK_AQUA + "You have shot yourself into the air!");
 		LocaleManager.getInstance().save();
+		Utils.addLocale("sacrificeTarget", ChatColor.DARK_AQUA + "You have sacrificed " + ChatColor.GOLD
+				+ "%target" + ChatColor.DARK_AQUA + "!");
+		Utils.addLocale("sacrificeSender", ChatColor.DARK_AQUA + "You have been sacrificed by " + ChatColor.GOLD
+				+ "%sender" + ChatColor.DARK_AQUA + "!");
+		Utils.addLocale("sacrificeYourself", ChatColor.DARK_AQUA + "You have sacrificed yourself!");
+		Utils.addLocale("censorTarget", ChatColor.RED + "Watch your language!");
+		Utils.addLocale("censorbroadcast", ChatColor.GOLD + "%player" + ChatColor.DARK_PURPLE
+				+ " just got slayed because he used bad language!");
+		Utils.addLocale("arrowTarget", ChatColor.DARK_AQUA + "You have shot " + ChatColor.GOLD
+				+ "%target" + ChatColor.DARK_AQUA + " to death!");
+		Utils.addLocale("arrowSender", ChatColor.DARK_AQUA + "You have been shot to death by " + ChatColor.GOLD
+				+ "%sender" + ChatColor.DARK_AQUA + "!");
+		Utils.addLocale("arrowYourself", ChatColor.DARK_AQUA + "You have shot yourself to death!");
+		Utils.addLocale("fireTarget", ChatColor.DARK_AQUA + "You have set " + ChatColor.GOLD
+				+ "%target" + ChatColor.DARK_AQUA + " on fire till he dies!");
+		Utils.addLocale("fireSender", ChatColor.DARK_AQUA + "You have been set on by " + ChatColor.GOLD
+				+ "%sender" + ChatColor.DARK_AQUA + " until you die!");
+		Utils.addLocale("fireYourself", ChatColor.DARK_AQUA + "You set yourself on fire until you die!");
+		LocaleManager.getInstance().save();
 	}
 
 	@Override
@@ -117,10 +143,15 @@ public class FunCommands extends AbstractAdminCmdPlugin {
 		players = new HashMap<String, Player>();
 		blockStates = new HashMap<Player, BlocksOld>();
 		blockLocStates = new HashMap<Location, BlocksOld>();
+		onFire = new HashSet<Player>();
 		final PluginManager pm = getServer().getPluginManager();
 		pm.registerEvents(new FCPlayerListener(), this);
+		if (Configuration.getInstance().getConfBoolean("ChatCensor")) {
+			pm.registerEvents(new FCChatListener(), this);
+		}
 		PluginDescriptionFile pdfFile = this.getDescription();
 		permissionLinker.registerAllPermParent();
+		loadChatCensorFile();
 		EggTypeClassLoader.addPackage(this, "de.Lathanael.FC.Eggs");
 		getLogger().info("Enabled. (Version " + pdfFile.getVersion() + ")");
 	}
@@ -136,5 +167,28 @@ public class FunCommands extends AbstractAdminCmdPlugin {
 
 		PluginDescriptionFile pdfFile = this.getDescription();
 		getLogger().info("Disabled. (Version " + pdfFile.getVersion() + ")");
+	}
+
+	private void loadChatCensorFile() {
+		File file = new File(getDataFolder().getPath() + File.separator + "CensorStrings.txt");
+		if (!file.exists()) {
+			try {
+				file.createNewFile();
+				InputStream in = getResource("CensorStrings.txt");
+				FileWriter writer = new FileWriter(file);
+				for (int i = 0; (i = in.read()) > 0;) {
+					writer.write(i);
+				}
+				writer.flush();
+				writer.close();
+				in.close();
+				ChatCensorStrings.loadStrings(file);
+			} catch (IOException e) {
+				getLogger().info("Failed to create CensorStrings.txt!");
+				e.printStackTrace();
+			}
+		} else {
+			ChatCensorStrings.loadStrings(file);
+		}
 	}
 }

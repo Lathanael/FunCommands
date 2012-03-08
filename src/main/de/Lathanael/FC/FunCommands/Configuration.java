@@ -55,6 +55,7 @@ public class Configuration {
 		pluginConfig.add("Rocket.normalPower", 1.5);
 		pluginConfig.add("Rocket.flagPower", 5);
 		pluginConfig.add("PersistentNames", false);
+		pluginConfig.add("ChatCensor", false);
 		try {
 			pluginConfig.save();
 		} catch(IOException exception) {
