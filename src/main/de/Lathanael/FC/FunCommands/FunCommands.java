@@ -32,10 +32,13 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 
 import de.Lathanael.FC.Commands.Attaint;
+import de.Lathanael.FC.Commands.Barrage;
 import de.Lathanael.FC.Commands.Entomb;
 import de.Lathanael.FC.Commands.FCVoid;
 import de.Lathanael.FC.Commands.Rocket;
+import de.Lathanael.FC.Commands.Sacrifice;
 import de.Lathanael.FC.Commands.Slap;
+import de.Lathanael.FC.Commands.Wound;
 import de.Lathanael.FC.Listeners.FCChatListener;
 import de.Lathanael.FC.Listeners.FCPlayerListener;
 import de.Lathanael.FC.Tools.BlocksOld;
@@ -74,6 +77,9 @@ public class FunCommands extends AbstractAdminCmdPlugin {
 		ACPluginManager.registerCommand(Entomb.class);
 		ACPluginManager.registerCommand(FCVoid.class);
 		ACPluginManager.registerCommand(Attaint.class);
+		ACPluginManager.registerCommand(Sacrifice.class);
+		ACPluginManager.registerCommand(Barrage.class);
+		ACPluginManager.registerCommand(Wound.class);
 	}
 
 	@Override
@@ -132,6 +138,11 @@ public class FunCommands extends AbstractAdminCmdPlugin {
 		Utils.addLocale("fireSender", ChatColor.DARK_AQUA + "You have been set on by " + ChatColor.GOLD
 				+ "%sender" + ChatColor.DARK_AQUA + " until you die!");
 		Utils.addLocale("fireYourself", ChatColor.DARK_AQUA + "You set yourself on fire until you die!");
+		Utils.addLocale("woundTarget", ChatColor.DARK_AQUA + "You have wounded " + ChatColor.GOLD
+				+ "%target" + ChatColor.DARK_AQUA + "!");
+		Utils.addLocale("woundSender", ChatColor.DARK_AQUA + "You have been wounded by " + ChatColor.GOLD
+				+ "%sender" + ChatColor.DARK_AQUA + "!");
+		Utils.addLocale("woundYourself", ChatColor.DARK_AQUA + "You wounded yourself!");
 		LocaleManager.getInstance().save();
 	}
 
