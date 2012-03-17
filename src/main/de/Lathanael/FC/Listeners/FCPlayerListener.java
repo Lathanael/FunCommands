@@ -31,8 +31,8 @@ import be.Balor.Player.ACPlayer;
 import be.Balor.Tools.Type;
 import be.Balor.Tools.Files.ObjectContainer;
 
+import de.Lathanael.FC.FunCommands.FCConfigEnum;
 import de.Lathanael.FC.FunCommands.FunCommands;
-import de.Lathanael.FC.FunCommands.Configuration;
 import de.Lathanael.FC.Tools.Utilities;
 
 /**
@@ -64,7 +64,7 @@ public class FCPlayerListener implements Listener {
 		FunCommands.onFire.remove(event.getPlayer());
 		String displayName = event.getPlayer().getDisplayName();
 		if (FunCommands.players.containsKey(displayName)) {
-			if (Configuration.getInstance().getConfBoolean("PersistentNames")) {
+			if (FCConfigEnum.PERS_NAMES.getBoolean()) {
 				ACPlayer player = ACPlayer.getPlayer(event.getPlayer());
 				player.setInformation("displayName", displayName);
 			}
@@ -77,7 +77,7 @@ public class FCPlayerListener implements Listener {
 		FunCommands.onFire.remove(event.getPlayer());
 		String displayName = event.getPlayer().getDisplayName();
 		if (FunCommands.players.containsKey(displayName)) {
-			if (Configuration.getInstance().getConfBoolean("PersistentNames")) {
+			if (FCConfigEnum.PERS_NAMES.getBoolean()) {
 				ACPlayer player = ACPlayer.getPlayer(event.getPlayer());
 				player.setInformation("displayName", displayName);
 			}

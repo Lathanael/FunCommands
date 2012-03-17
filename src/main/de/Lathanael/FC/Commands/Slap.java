@@ -24,7 +24,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
-import de.Lathanael.FC.FunCommands.Configuration;
+import de.Lathanael.FC.FunCommands.FCConfigEnum;
+import de.Lathanael.FC.FunCommands.FunCommands;
 
 import be.Balor.Manager.Commands.CommandArgs;
 import be.Balor.Manager.Commands.CoreCommand;
@@ -71,43 +72,43 @@ public class Slap extends CoreCommand {
 			replace.put("sender", "Server Admin");
 		Vector direction = target.getLocation().getDirection();
 		if (args.hasFlag('h')) {
-			power = Configuration.getInstance().getConfFloat("Slap.hPower");
-			height = Configuration.getInstance().getConfFloat("Slap.hHeight");
+			power = FCConfigEnum.SLAP_HP.getFloat();
+			height = FCConfigEnum.SLAP_HH.getFloat();
 			if (power > 10) {
 				power = 10;
-				Configuration.getInstance().setConfProperty("Slap.hPower", 10);
+				FunCommands.getConfigEnum().set("Slap.hPower", 10.0F);
 			}
 			if (height > 10) {
 				height = 10;
-				Configuration.getInstance().setConfProperty("Slap.hHeight", 10);
+				FunCommands.getConfigEnum().set("Slap.hHeight", 10.0F);
 			}
 			direction = new Vector(direction.getX()*power, height, direction.getZ()*power);
 			target.setVelocity(direction);
 		}
 		else if (args.hasFlag('v')) {
-			power = Configuration.getInstance().getConfFloat("Slap.vPower");
-			height = Configuration.getInstance().getConfFloat("Slap.vHeight");
+			power = FCConfigEnum.SLAP_VP.getFloat();
+			height = FCConfigEnum.SLAP_VH.getFloat();
 			if (power > 10) {
 				power = 10;
-				Configuration.getInstance().setConfProperty("Slap.vPower", 10);
+				FunCommands.getConfigEnum().set("Slap.vPower", 10.0F);
 			}
 			if (height > 10) {
 				height = 10;
-				Configuration.getInstance().setConfProperty("Slap.vHeight", 10);
+				FunCommands.getConfigEnum().set("Slap.vHeight", 10.0F);
 			}
 			direction = new Vector(direction.getX()*power, height, direction.getZ()*power);
 			target.setVelocity(direction);
 		}
 		else {
-			power = Configuration.getInstance().getConfFloat("Slap.normalPower");
-			height = Configuration.getInstance().getConfFloat("Slap.normalHeight");
+			power = FCConfigEnum.SLAP_NP.getFloat();
+			height = FCConfigEnum.SLAP_NH.getFloat();
 			if (power > 10) {
 				power = 10;
-				Configuration.getInstance().setConfProperty("Slap.normalPower", 10);
+				FunCommands.getConfigEnum().set("Slap.normalPower", 10.0F);
 			}
 			if (height > 10) {
 				height = 10;
-				Configuration.getInstance().setConfProperty("Slap.normalHeight", 10);
+				FunCommands.getConfigEnum().set("Slap.normalHeight", 10.0F);
 			}
 			direction = new Vector(direction.getX()*power, height, direction.getZ()*power);
 			target.setVelocity(direction);

@@ -24,6 +24,7 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -46,6 +47,7 @@ import be.Balor.Manager.LocaleManager;
 import be.Balor.Manager.Permissions.PermParent;
 import be.Balor.Player.ACPlayer;
 import be.Balor.Tools.Utils;
+import be.Balor.Tools.Configuration.File.ExtendedConfiguration;
 import be.Balor.Tools.Egg.EggTypeClassLoader;
 import be.Balor.bukkit.AdminCmd.ACPluginManager;
 import be.Balor.bukkit.AdminCmd.AbstractAdminCmdPlugin;
@@ -61,7 +63,8 @@ public class FunCommands extends AbstractAdminCmdPlugin {
 	public static HashMap<Location, BlocksOld> blockLocStates;
 	public static HashMap<String, Player> players;
 	public static HashSet<Player> onFire;
-	private Configuration config;
+	private static ExtendedConfiguration config;
+	public static Logger log;
 
 	/**
 	 * @param name
@@ -149,22 +152,33 @@ public class FunCommands extends AbstractAdminCmdPlugin {
 	@Override
 	public void onEnable() {
 		super.onEnable();
-		config = Configuration.getInstance();
-		config.setInstance(this);
+		PluginDescriptionFile pdfFile = this.getDescription();
+		log = getLogger();
+		config = ExtendedConfiguration.loadConfiguration(new File(getDataFolder(), "config.yml"));
+		FCConfigEnum.setPluginInfos(pdfFile);
+		FCConfigEnum.setPluginConfig(config);
+		config.options().copyDefaults(true).header(FCConfigEnum.getHeader());
+		config.addDefaults(FCConfigEnum.getDefaultvalues());
+		try {
+			config.save();
+		} catch (IOException e) {
+			log.warning("Error while saving the config.yml!");
+		}
+//		config = Configuration.getInstance();
+//		config.setInstance(this);
 		players = new HashMap<String, Player>();
 		blockStates = new HashMap<Player, BlocksOld>();
 		blockLocStates = new HashMap<Location, BlocksOld>();
 		onFire = new HashSet<Player>();
 		final PluginManager pm = getServer().getPluginManager();
 		pm.registerEvents(new FCPlayerListener(), this);
-		if (Configuration.getInstance().getConfBoolean("ChatCensor")) {
+		if (FCConfigEnum.CENSOR.getBoolean()) {
+			loadChatCensorFile();
 			pm.registerEvents(new FCChatListener(), this);
 		}
-		PluginDescriptionFile pdfFile = this.getDescription();
 		permissionLinker.registerAllPermParent();
-		loadChatCensorFile();
 		EggTypeClassLoader.addPackage(this, "de.Lathanael.FC.Eggs");
-		getLogger().info("Enabled. (Version " + pdfFile.getVersion() + ")");
+		log.info("Enabled. (Version " + pdfFile.getVersion() + ")");
 	}
 
 	/*
@@ -177,7 +191,7 @@ public class FunCommands extends AbstractAdminCmdPlugin {
 			ACPlayer.getPlayer(entry.getValue()).setInformation("displayName", entry.getKey());
 
 		PluginDescriptionFile pdfFile = this.getDescription();
-		getLogger().info("Disabled. (Version " + pdfFile.getVersion() + ")");
+		log.info("Disabled. (Version " + pdfFile.getVersion() + ")");
 	}
 
 	private void loadChatCensorFile() {
@@ -195,11 +209,15 @@ public class FunCommands extends AbstractAdminCmdPlugin {
 				in.close();
 				ChatCensorStrings.loadStrings(file);
 			} catch (IOException e) {
-				getLogger().info("Failed to create CensorStrings.txt!");
+				log.info("Failed to create CensorStrings.txt!");
 				e.printStackTrace();
 			}
 		} else {
 			ChatCensorStrings.loadStrings(file);
 		}
+	}
+
+	public static ExtendedConfiguration getConfigEnum() {
+		return config;
 	}
 }
