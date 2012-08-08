@@ -75,6 +75,10 @@ public class Entomb extends CoreCommand {
 			mat = ACHelper.getInstance().checkMaterial(sender, args.getString(1));
 		if (mat.isNull())
 			return;
+		if (!mat.getMaterial().isBlock()) {
+			Utils.sI18n(sender, "notABlock");
+			return;
+		}
 		Location loc = target.getLocation();
 		Utilities.entomb(sender, target, loc, mat.getMaterial(), states);
 		HashMap<String, String> replace = new HashMap<String, String>();
