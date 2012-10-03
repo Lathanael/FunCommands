@@ -146,7 +146,6 @@ public class FunCommands extends AbstractAdminCmdPlugin {
 		Utils.addLocale("woundSender", ChatColor.DARK_AQUA + "You have been wounded by " + ChatColor.GOLD
 				+ "%sender" + ChatColor.DARK_AQUA + "!");
 		Utils.addLocale("woundYourself", ChatColor.DARK_AQUA + "You wounded yourself!");
-		Utils.addLocale("notABlock", ChatColor.RED + "You did not enter a valid block id!");
 		LocaleManager.getInstance().save();
 	}
 

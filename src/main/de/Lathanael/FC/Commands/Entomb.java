@@ -35,6 +35,7 @@ import be.Balor.Manager.Permissions.ActionNotPermitedException;
 import be.Balor.Tools.MaterialContainer;
 import be.Balor.Tools.Utils;
 import be.Balor.bukkit.AdminCmd.ACHelper;
+import be.Balor.bukkit.AdminCmd.LocaleHelper;
 
 /**
  * @author Lathanael (aka Philippe Leipold)
@@ -76,7 +77,7 @@ public class Entomb extends CoreCommand {
 		if (mat.isNull())
 			return;
 		if (!mat.getMaterial().isBlock()) {
-			Utils.sI18n(sender, "notABlock");
+			LocaleHelper.NOT_A_BLOCK.sendLocale(sender);
 			return;
 		}
 		Location loc = target.getLocation();
