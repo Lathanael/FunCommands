@@ -25,8 +25,7 @@ import java.util.HashMap;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerChatEvent;
-
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import be.Balor.Tools.Utils;
 
 import de.Lathanael.FC.FunCommands.ChatCensorStrings;
@@ -38,7 +37,7 @@ import de.Lathanael.FC.FunCommands.ChatCensorStrings;
 public class FCChatListener implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGHEST)
-	public void onPlayerChat(PlayerChatEvent event) {
+	public void onPlayerChat(final AsyncPlayerChatEvent event) {
 		String message = event.getMessage();
 		HashMap<String, String> replace = new HashMap<String, String>();
 		replace.put("player", Utils.getPlayerName(event.getPlayer()));
