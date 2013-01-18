@@ -17,19 +17,21 @@
 
 package de.Lathanael.FC.Tools;
 
-import net.minecraft.server.Packet20NamedEntitySpawn;
-import net.minecraft.server.Packet29DestroyEntity;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.command.CommandSender;
-import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
 import de.Lathanael.FC.FunCommands.FunCommands;
 
+import be.Balor.Tools.Compatibility.MinecraftReflection;
+import be.Balor.Tools.Compatibility.Reflect.FieldUtils;
+import be.Balor.Tools.Compatibility.Reflect.MethodHandler;
 import be.Balor.bukkit.AdminCmd.ACPluginManager;
 
 
@@ -179,23 +181,23 @@ public class Utilities {
 	}
 
 	/**
-	 * Creates a new Player and destroys the old one'S shell.
+	 * Creates a new Player and destroys the old one's shell.
 	 *
 	 * @param target
 	 * @param playerName
 	 */
 	public static void createNewPlayerShell(Player target, String playerName) {
-		Packet29DestroyEntity destroy = new Packet29DestroyEntity(target.getEntityId());
-		Packet20NamedEntitySpawn create = Utilities.createNewPlayerPacket(target, playerName);
-		for (Player update : ACPluginManager.getServer().getOnlinePlayers()) {
-			if(!update.getWorld().equals(target.getWorld())) {
-				continue;
-			}
-			if (update.equals(target)) {
-				continue;
-			}
-			((CraftPlayer) update).getHandle().netServerHandler.sendPacket(destroy);
-			((CraftPlayer) update).getHandle().netServerHandler.sendPacket(create);
+		try {
+			final Class<?> destroyPacketClass = MinecraftReflection.getPacket29DestroyEntityClass();
+			final Constructor<?> destroyPacketConstructor = destroyPacketClass.getConstructor(int.class);
+			final Object destroyPacket = destroyPacketConstructor.newInstance(target.getEntityId());
+			final Object createPacket = Utilities.createNewPlayerPacket(target, playerName);
+			final Object server = MinecraftReflection.getHandle(target.getServer());
+			final MethodHandler sendAll = new MethodHandler(server.getClass(), "sendAll", MinecraftReflection.getPacketClass());
+			sendAll.invoke(server, destroyPacket);
+			sendAll.invoke(server, createPacket);
+		} catch (final Exception e) {
+			throw new RuntimeException("Can't create the wanted packet", e);
 		}
 	}
 
@@ -205,19 +207,31 @@ public class Utilities {
 	 * @param player The Player to be "replaced"
 	 * @param playerName The new name to be displayed
 	 * @return
+	 * @throws InvocationTargetException 
+	 * @throws IllegalAccessException 
+	 * @throws InstantiationException 
+	 * @throws NoSuchMethodException 
 	 */
-	private static Packet20NamedEntitySpawn createNewPlayerPacket(Player player, String playerName) {
-		Packet20NamedEntitySpawn packet = new Packet20NamedEntitySpawn();
-		Location loc = player.getLocation();
-		packet.a = player.getEntityId();
-		packet.b = playerName;
-		packet.c = floor_double(loc.getX() *32D);
-		packet.d = floor_double(loc.getY() *32D);
-		packet.e = floor_double(loc.getZ() * 32D);
-		packet.f = (byte)(int)((loc.getYaw() * 256F) / 360F);
-		packet.g = (byte)(int)((loc.getPitch() * 256F) / 360F);
-		packet.h = player.getItemInHand().getTypeId();
-		return packet;
+	private static Object createNewPlayerPacket(Player player, String playerName) {
+		try {
+			final Class<?> packetClass = MinecraftReflection.getPacket20NamedEntitySpawnClass();
+			final Constructor<?> packetConstructor = packetClass.getConstructor(int.class);
+			final Object packet = packetConstructor.newInstance();
+			final Location loc = player.getLocation();
+			final Object playerHandle = MinecraftReflection.getHandle(player);
+			FieldUtils.setField(packet, "a", player.getEntityId());
+			FieldUtils.setField(packet, "b", playerName);
+			FieldUtils.setField(packet, "c", floor_double(loc.getX() *32D));
+			FieldUtils.setField(packet, "d", floor_double(loc.getY() *32D));
+			FieldUtils.setField(packet, "e", floor_double(loc.getZ() *32D));
+			FieldUtils.setField(packet, "f", (byte)(int)((loc.getYaw() * 256F) / 360F));
+			FieldUtils.setField(packet, "g", (byte)(int)((loc.getPitch() * 256F) / 360F));
+			FieldUtils.setField(packet, "h", player.getItemInHand().getTypeId());
+			FieldUtils.setField(packet, "i", FieldUtils.getField(playerHandle, "datawatcher"));
+			return packet;
+		} catch (final Exception e) {
+			throw new RuntimeException("Can't create the wanted packet", e);
+		}
 	}
 
 	/**
