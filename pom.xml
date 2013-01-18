@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.Lathanael</groupId>
 	<artifactId>FunCommands</artifactId>
-	<version>1.6</version>
+	<version>1.6.1-SNAPSHOT</version>
 	<name>FunCommands</name>
 	<scm>
 		<connection>scm:git:git@github.com:Lathanael/FunCommands.git</connection>
