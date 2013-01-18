@@ -22,12 +22,10 @@ package de.Lathanael.FC.Commands;
 
 import java.util.HashMap;
 
-import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.util.Vector;
-
 import de.Lathanael.FC.FunCommands.FunCommands;
+import de.Lathanael.FC.Tools.Threads.BarrageTask;
 
 import be.Balor.Manager.Commands.CommandArgs;
 import be.Balor.Manager.Commands.CoreCommand;
@@ -37,6 +35,7 @@ import be.Balor.Manager.Permissions.PermChild;
 import be.Balor.Manager.Permissions.PermParent;
 import be.Balor.Manager.Permissions.PermissionManager;
 import be.Balor.Tools.Utils;
+import be.Balor.bukkit.AdminCmd.ACPluginManager;
 
 /**
  * @author Lathanael (aka Philippe Leipold)
@@ -57,17 +56,33 @@ public class Barrage extends CoreCommand {
 	 */
 	@Override
 	public void execute(CommandSender sender, CommandArgs args) throws PlayerNotFound, ActionNotPermitedException {
-		Player target;
-		target = Utils.getUserParam(sender, args, permNode);
+		final Player target = Utils.getUserParam(sender, args, permNode);
 		if (target == null)
 			return;
 		HashMap<String, String> replace = new HashMap<String, String>();
 		replace.put("target", Utils.getPlayerName(target));
 		if (args.getString(0).equalsIgnoreCase("arrow") && PermissionManager.hasPerm(sender, "fun.barrage.arrow")) {
-			Location loc = target.getLocation();
-			Location loc2 = new Location(target.getWorld(), loc.getX(), loc.getY()+4, loc.getZ());
-			for (int i = 0; i < 20; i++)
-				target.getWorld().spawnArrow(loc2, new Vector(0, -1, 0), 1F, 10F);
+			final int id1 = ACPluginManager.getScheduler().scheduleSyncRepeatingTask(ACPluginManager.getPluginInstance("FunCommands"), new BarrageTask(target), 0L, 10L);
+			final int id2 = ACPluginManager.getScheduler().scheduleSyncRepeatingTask(ACPluginManager.getPluginInstance("FunCommands"), new Runnable() {
+				
+				@Override
+				public void run() {
+					if (target.isDead()) {
+						ACPluginManager.getScheduler().cancelTask(id1);
+					}
+				}
+			}, 11, 5L);
+			ACPluginManager.getScheduler().scheduleSyncDelayedTask(ACPluginManager.getPluginInstance("FunCommands"), new Runnable() {
+				
+				@Override
+				public void run() {
+					if (target.isDead() != true) {
+						ACPluginManager.getScheduler().cancelTask(id1);
+						target.setHealth(0);
+					}
+					ACPluginManager.getScheduler().cancelTask(id2);
+				}
+			}, 300L);
 
 			if (Utils.isPlayer(sender, false))
 				replace.put("sender", Utils.getPlayerName((Player) sender));
@@ -80,7 +95,7 @@ public class Barrage extends CoreCommand {
 				Utils.sI18n(sender, "arrowYourself", replace);
 			}
 		} else if (args.getString(0).equalsIgnoreCase("fire") && PermissionManager.hasPerm(sender, "fun.barrage.fire")) {
-			target.setFireTicks(100);
+			target.setFireTicks(100000);
 			FunCommands.onFire.add(target);
 
 			if (Utils.isPlayer(sender, false))
