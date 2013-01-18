@@ -189,8 +189,8 @@ public class Utilities {
 	public static void createNewPlayerShell(Player target, String playerName) {
 		try {
 			final Class<?> destroyPacketClass = MinecraftReflection.getPacket29DestroyEntityClass();
-			final Constructor<?> destroyPacketConstructor = destroyPacketClass.getConstructor(int.class);
-			final Object destroyPacket = destroyPacketConstructor.newInstance(target.getEntityId());
+			final Constructor<?> destroyPacketConstructor = destroyPacketClass.getConstructor(int[].class);
+			final Object destroyPacket = destroyPacketConstructor.newInstance(new int[] {target.getEntityId()});
 			final Object createPacket = Utilities.createNewPlayerPacket(target, playerName);
 			final Object server = MinecraftReflection.getHandle(target.getServer());
 			final MethodHandler sendAll = new MethodHandler(server.getClass(), "sendAll", MinecraftReflection.getPacketClass());
@@ -215,7 +215,7 @@ public class Utilities {
 	private static Object createNewPlayerPacket(Player player, String playerName) {
 		try {
 			final Class<?> packetClass = MinecraftReflection.getPacket20NamedEntitySpawnClass();
-			final Constructor<?> packetConstructor = packetClass.getConstructor(int.class);
+			final Constructor<?> packetConstructor = packetClass.getConstructor();
 			final Object packet = packetConstructor.newInstance();
 			final Location loc = player.getLocation();
 			final Object playerHandle = MinecraftReflection.getHandle(player);
