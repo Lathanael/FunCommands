@@ -95,7 +95,7 @@ public class Attaint extends CoreCommand {
 		target.setDisplayName(args.getString(1));
 		if (!ACPlayer.getPlayer(target).hasPower(Type.INVISIBLE) || !ACPlayer.getPlayer(target).hasPower(Type.FAKEQUIT)) {
 			target.setPlayerListName(args.getString(1));
-			Utilities.createNewPlayerShell(target, args.getString(1));
+			//Utilities.createNewPlayerShell(target, args.getString(1));
 		}
 
 		if (!target.equals(sender)) {

@@ -52,7 +52,7 @@ public class FCPlayerListener implements Listener {
 				player.setDisplayName(displayName);
 				if (!ACPlayer.getPlayer(player).hasPower(Type.INVISIBLE) || !ACPlayer.getPlayer(player).hasPower(Type.FAKEQUIT)) {
 					player.setPlayerListName(displayName);
-					Utilities.createNewPlayerShell(player, displayName);
+					//Utilities.createNewPlayerShell(player, displayName);
 				}
 			}
 			FunCommands.players.put(displayName, player);
