@@ -66,6 +66,7 @@ public class Attaint extends CoreCommand {
 			name = args.getString(0);
 		newArgs = new CommandArgs(name);
 		target = Utils.getUser(sender, newArgs, permNode, 0, true);
+		final ACPlayer acTarget = ACPlayer.getPlayer(target);
 		if (target == null)
 			return;
 
@@ -82,6 +83,7 @@ public class Attaint extends CoreCommand {
 			FunCommands.players.remove(args.getString(0));
 		if (args.length < 2) {
 			target.setDisplayName(target.getName());
+			acTarget.setInformation("displayName", target.getName());
 			return;
 		}
 		FunCommands.players.put(args.getString(1), target);
@@ -93,6 +95,7 @@ public class Attaint extends CoreCommand {
 			replace.put("sender", "Server Admin");
 
 		target.setDisplayName(args.getString(1));
+		acTarget.setInformation("displayName", args.getString(1));
 		if (!ACPlayer.getPlayer(target).hasPower(Type.INVISIBLE) || !ACPlayer.getPlayer(target).hasPower(Type.FAKEQUIT)) {
 			target.setPlayerListName(args.getString(1));
 			//Utilities.createNewPlayerShell(target, args.getString(1));
