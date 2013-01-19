@@ -192,10 +192,22 @@ public class Utilities {
 			final Constructor<?> destroyPacketConstructor = destroyPacketClass.getConstructor(int[].class);
 			final Object destroyPacket = destroyPacketConstructor.newInstance(new int[] {target.getEntityId()});
 			final Object createPacket = Utilities.createNewPlayerPacket(target, playerName);
-			final Object server = MinecraftReflection.getHandle(target.getServer());
-			final MethodHandler sendAll = new MethodHandler(server.getClass(), "sendAll", MinecraftReflection.getPacketClass());
-			sendAll.invoke(server, destroyPacket);
-			sendAll.invoke(server, createPacket);
+			Object handler, handlerConnection;
+			MethodHandler sendPacket;
+			for (Player player : ACPluginManager.getServer().getOnlinePlayers()) {
+				if(!player.getWorld().equals(target.getWorld())) {
+					continue;
+				}
+				if (player.equals(target)) {
+					continue;
+				}
+				
+				handler = MinecraftReflection.getHandle(player);
+				handlerConnection = FieldUtils.getField(handler, "playerConnection");
+				sendPacket = new MethodHandler(handlerConnection.getClass(), "sendPacket", MinecraftReflection.getPacketClass());
+				sendPacket.invoke(destroyPacket);
+				sendPacket.invoke(createPacket);
+			}
 		} catch (final Exception e) {
 			throw new RuntimeException("Can't create the wanted packet", e);
 		}
