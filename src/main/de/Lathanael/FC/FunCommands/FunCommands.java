@@ -106,6 +106,8 @@ public class FunCommands extends AbstractAdminCmdPlugin {
 				+ " %target" + ChatColor.DARK_AQUA + " to:" + ChatColor.DARK_RED +" %name");
 		Utils.addLocale("attaintShowName", ChatColor.DARK_AQUA + "The Displayname of " + ChatColor.GOLD + "%name"
 				+ ChatColor.DARK_AQUA + " is:" + ChatColor.DARK_RED	+ " %dname");
+		Utils.addLocale("attaintErrorDuplicateName", ChatColor.RED + "A player with the name " + ChatColor.GOLD
+				+ "%name" + ChatColor.RED + " is already online. Duplicate players are not possible.");
 		Utils.addLocale("entombSender", ChatColor.DARK_AQUA + "You have entombed " + ChatColor.GOLD
 				+ "%target" + ChatColor.DARK_AQUA + "!");
 		Utils.addLocale("entombTarget", ChatColor.DARK_AQUA + "You have been entombed by " + ChatColor.GOLD

@@ -33,6 +33,7 @@ import be.Balor.Manager.Permissions.PermissionManager;
 import be.Balor.Player.ACPlayer;
 import be.Balor.Tools.Type;
 import be.Balor.Tools.Utils;
+import be.Balor.bukkit.AdminCmd.ACPluginManager;
 
 /**
  * @author Lathanael (aka Philippe Leipold)
@@ -60,17 +61,24 @@ public class Attaint extends CoreCommand {
 		Player target;
 		String name = "";
 		CommandArgs newArgs;
+		HashMap<String, String> replace = new HashMap<String, String>();
 		if (FunCommands.players.containsKey(args.getString(0)))
 			name = FunCommands.players.get(args.getString(0)).getName();
 		else
 			name = args.getString(0);
+		for (Player p : ACPluginManager.getServer().getOnlinePlayers()) {
+			if (p.getName().equals(name)) {
+				replace.put("name", name);
+				Utils.sI18n(sender, "attaintErrorDuplicateName", replace);
+				return;
+			}
+		}
 		newArgs = new CommandArgs(name);
 		target = Utils.getUser(sender, newArgs, permNode, 0, true);
 		final ACPlayer acTarget = ACPlayer.getPlayer(target);
 		if (target == null)
 			return;
-
-		HashMap<String, String> replace = new HashMap<String, String>();
+		
 		if (args.hasFlag('c')) {
 			if (!(PermissionManager.hasPerm(sender, "fun.attaint.check")))
 				return;
