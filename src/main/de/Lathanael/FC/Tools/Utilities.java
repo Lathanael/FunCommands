@@ -192,7 +192,7 @@ public class Utilities {
 			final Constructor<?> destroyPacketConstructor = destroyPacketClass.getConstructor(int[].class);
 			final Object destroyPacket = destroyPacketConstructor.newInstance(new int[] {target.getEntityId()});
 			final Object createPacket = Utilities.createNewPlayerPacket(target, playerName);
-			Object handler, handlerConnection;
+			Object netServerHandler, entityPlayer;
 			MethodHandler sendPacket;
 			for (Player player : ACPluginManager.getServer().getOnlinePlayers()) {
 				if(!player.getWorld().equals(target.getWorld())) {
@@ -201,10 +201,9 @@ public class Utilities {
 				if (player.equals(target)) {
 					continue;
 				}
-				
-				handler = MinecraftReflection.getHandle(player);
-				handlerConnection = FieldUtils.getField(handler, "playerConnection");
-				sendPacket = new MethodHandler(handlerConnection.getClass(), "sendPacket", MinecraftReflection.getPacketClass());
+				entityPlayer = MinecraftReflection.getHandle(player);
+				netServerHandler = MinecraftReflection.getNetServerHandler(entityPlayer);
+				sendPacket = new MethodHandler(netServerHandler.getClass(), "sendPacket", MinecraftReflection.getPacketClass());
 				sendPacket.invoke(destroyPacket);
 				sendPacket.invoke(createPacket);
 			}
