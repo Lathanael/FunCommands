@@ -18,8 +18,6 @@
 package de.Lathanael.FC.Tools;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -204,8 +202,8 @@ public class Utilities {
 				entityPlayer = MinecraftReflection.getHandle(player);
 				netServerHandler = MinecraftReflection.getNetServerHandler(entityPlayer);
 				sendPacket = new MethodHandler(netServerHandler.getClass(), "sendPacket", MinecraftReflection.getPacketClass());
-				sendPacket.invoke(destroyPacket);
-				sendPacket.invoke(createPacket);
+				sendPacket.invoke(netServerHandler, destroyPacket);
+				sendPacket.invoke(netServerHandler, createPacket);
 			}
 		} catch (final Exception e) {
 			throw new RuntimeException("Can't create the wanted packet", e);
@@ -218,10 +216,6 @@ public class Utilities {
 	 * @param player The Player to be "replaced"
 	 * @param playerName The new name to be displayed
 	 * @return
-	 * @throws InvocationTargetException 
-	 * @throws IllegalAccessException 
-	 * @throws InstantiationException 
-	 * @throws NoSuchMethodException 
 	 */
 	private static Object createNewPlayerPacket(Player player, String playerName) {
 		try {
