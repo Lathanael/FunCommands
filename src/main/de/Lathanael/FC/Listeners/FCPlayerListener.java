@@ -46,7 +46,7 @@ public class FCPlayerListener implements Listener {
 		Player player = event.getPlayer();
 		String displayName = null;
 		ObjectContainer o = ACPlayer.getPlayer(player).getInformation("displayName");
-		if (o != null) {
+		if (o != null && FCConfigEnum.PERS_NAMES.getBoolean()) {
 			displayName = o.getString();
 			if (displayName != null) {
 				player.setDisplayName(displayName);
