@@ -25,11 +25,12 @@ import java.util.HashMap;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import be.Balor.Manager.LocaleManager;
 import be.Balor.Manager.Commands.CommandArgs;
 import be.Balor.Manager.Commands.CoreCommand;
+import be.Balor.Manager.Exceptions.ActionNotPermitedException;
 import be.Balor.Manager.Exceptions.PlayerNotFound;
-import be.Balor.Manager.Permissions.ActionNotPermitedException;
-import be.Balor.Tools.Utils;
+import be.Balor.Tools.CommandUtils.Users;
 
 /**
  * @author Lathanael (aka Philippe Leipold)
@@ -48,21 +49,21 @@ public class Wound extends CoreCommand {
 	@Override
 	public void execute(CommandSender sender, CommandArgs args) throws PlayerNotFound, ActionNotPermitedException {
 		Player target;
-		target = Utils.getUserParam(sender, args, permNode);
+		target = Users.getUserParam(sender, args, permNode);
 		if (target == null)
 			return;
 		HashMap<String, String> replace = new HashMap<String, String>();
-		replace.put("target", Utils.getPlayerName(target));
+		replace.put("target", Users.getPlayerName(target));
 		target.setHealth(1);
-		if (Utils.isPlayer(sender, false))
-			replace.put("sender", Utils.getPlayerName((Player) sender));
+		if (Users.isPlayer(sender, false))
+			replace.put("sender", Users.getPlayerName((Player) sender));
 		else
 			replace.put("sender", "Server Admin");
 		if (!target.equals(sender)) {
-			Utils.sI18n(target, "woundTarget", replace);
-			Utils.sI18n(sender, "woundSender", replace);
+			LocaleManager.sI18n(target, "woundTarget", replace);
+			LocaleManager.sI18n(sender, "woundSender", replace);
 		} else {
-			Utils.sI18n(sender, "woundYourself", replace);
+			LocaleManager.sI18n(sender, "woundYourself", replace);
 		}
 	}
 

@@ -24,18 +24,18 @@ import org.bukkit.block.BlockState;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import be.Balor.Manager.LocaleManager;
+import be.Balor.Manager.Commands.CommandArgs;
+import be.Balor.Manager.Commands.CoreCommand;
+import be.Balor.Manager.Exceptions.ActionNotPermitedException;
+import be.Balor.Manager.Exceptions.PlayerNotFound;
+import be.Balor.Tools.MaterialContainer;
+import be.Balor.Tools.CommandUtils.Users;
+import be.Balor.bukkit.AdminCmd.ACHelper;
+import be.Balor.bukkit.AdminCmd.LocaleHelper;
 import de.Lathanael.FC.FunCommands.FunCommands;
 import de.Lathanael.FC.Tools.BlocksOld;
 import de.Lathanael.FC.Tools.Utilities;
-
-import be.Balor.Manager.Commands.CommandArgs;
-import be.Balor.Manager.Commands.CoreCommand;
-import be.Balor.Manager.Exceptions.PlayerNotFound;
-import be.Balor.Manager.Permissions.ActionNotPermitedException;
-import be.Balor.Tools.MaterialContainer;
-import be.Balor.Tools.Utils;
-import be.Balor.bukkit.AdminCmd.ACHelper;
-import be.Balor.bukkit.AdminCmd.LocaleHelper;
 
 /**
  * @author Lathanael (aka Philippe Leipold)
@@ -61,7 +61,7 @@ public class Entomb extends CoreCommand {
 	@Override
 	public void execute(CommandSender sender, CommandArgs args) throws PlayerNotFound, ActionNotPermitedException {
 		Player target;
-		target = Utils.getUser(sender, args, permNode, 0, true);
+		target = Users.getUser(sender, args, permNode, 0, true);
 		if (target == null)
 			return;
 
@@ -83,16 +83,16 @@ public class Entomb extends CoreCommand {
 		Location loc = target.getLocation();
 		Utilities.entomb(sender, target, loc, mat.getMaterial(), states);
 		HashMap<String, String> replace = new HashMap<String, String>();
-		replace.put("target", Utils.getPlayerName(target));
-		if (Utils.isPlayer(sender, false))
-			replace.put("sender", Utils.getPlayerName((Player) sender));
+		replace.put("target", Users.getPlayerName(target));
+		if (Users.isPlayer(sender, false))
+			replace.put("sender", Users.getPlayerName((Player) sender));
 		else
 			replace.put("sender", "Server Admin");
 		if (!target.equals(sender)) {
-			Utils.sI18n(target, "entombTarget", replace);
-			Utils.sI18n(sender, "entombSender", replace);
+			LocaleManager.sI18n(target, "entombTarget", replace);
+			LocaleManager.sI18n(sender, "entombSender", replace);
 		} else {
-			Utils.sI18n(sender, "entombYourself", replace);
+			LocaleManager.sI18n(sender, "entombYourself", replace);
 		}
 	}
 

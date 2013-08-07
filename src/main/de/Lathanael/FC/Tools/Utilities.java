@@ -27,6 +27,7 @@ import org.bukkit.entity.Player;
 
 import de.Lathanael.FC.FunCommands.FunCommands;
 
+import be.Balor.Tools.Compatibility.ACMinecraftReflection;
 import be.Balor.Tools.Compatibility.MinecraftReflection;
 import be.Balor.Tools.Compatibility.Reflect.FieldUtils;
 import be.Balor.Tools.Compatibility.Reflect.MethodHandler;
@@ -186,7 +187,7 @@ public class Utilities {
 	 */
 	public static void createNewPlayerShell(Player target, String playerName) {
 		try {
-			final Class<?> destroyPacketClass = MinecraftReflection.getPacket29DestroyEntityClass();
+			final Class<?> destroyPacketClass = ACMinecraftReflection.getPacket29DestroyEntityClass();
 			final Constructor<?> destroyPacketConstructor = destroyPacketClass.getConstructor(int[].class);
 			final Object destroyPacket = destroyPacketConstructor.newInstance(new int[] {target.getEntityId()});
 			final Object createPacket = Utilities.createNewPlayerPacket(target, playerName);
@@ -199,8 +200,8 @@ public class Utilities {
 				if (player.equals(target)) {
 					continue;
 				}
-				entityPlayer = MinecraftReflection.getHandle(player);
-				netServerHandler = MinecraftReflection.getNetServerHandler(entityPlayer);
+				entityPlayer = ACMinecraftReflection.getHandle(player);
+				netServerHandler = ACMinecraftReflection.getNetServerHandler(entityPlayer);
 				sendPacket = new MethodHandler(netServerHandler.getClass(), "sendPacket", MinecraftReflection.getPacketClass());
 				sendPacket.invoke(netServerHandler, destroyPacket);
 				sendPacket.invoke(netServerHandler, createPacket);
@@ -219,11 +220,11 @@ public class Utilities {
 	 */
 	private static Object createNewPlayerPacket(Player player, String playerName) {
 		try {
-			final Class<?> packetClass = MinecraftReflection.getPacket20NamedEntitySpawnClass();
+			final Class<?> packetClass = ACMinecraftReflection.getPacket20NamedEntitySpawnClass();
 			final Constructor<?> packetConstructor = packetClass.getConstructor();
 			final Object packet = packetConstructor.newInstance();
 			final Location loc = player.getLocation();
-			final Object playerHandle = MinecraftReflection.getHandle(player);
+			final Object playerHandle = ACMinecraftReflection.getHandle(player);
 			FieldUtils.setField(packet, "a", player.getEntityId());
 			FieldUtils.setField(packet, "b", playerName);
 			FieldUtils.setField(packet, "c", floor_double(loc.getX() *32D));

@@ -26,7 +26,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
-import be.Balor.Tools.Utils;
+
+import be.Balor.Manager.LocaleManager;
+import be.Balor.Tools.CommandUtils.Users;
 
 import de.Lathanael.FC.FunCommands.ChatCensorStrings;
 
@@ -40,20 +42,20 @@ public class FCChatListener implements Listener {
 	public void onPlayerChat(final AsyncPlayerChatEvent event) {
 		String message = event.getMessage();
 		HashMap<String, String> replace = new HashMap<String, String>();
-		replace.put("player", Utils.getPlayerName(event.getPlayer()));
+		replace.put("player", Users.getPlayerName(event.getPlayer()));
 		if (ChatCensorStrings.containsString(message)) {
-			event.getPlayer().sendMessage(Utils.I18n("censorTarget"));
+			event.getPlayer().sendMessage(LocaleManager.I18n("censorTarget"));
 			event.getPlayer().setHealth(0);
-			Utils.broadcastMessage(Utils.I18n("censorBroadcast", replace));
+			Users.broadcastMessage(LocaleManager.I18n("censorBroadcast", replace));
 		} else {
 			String[] split = message.split(" ");
 			if (split == null || split.length == 0)
 				return;
 			for (String s : split) {
 				if (ChatCensorStrings.containsString(s)) {
-					event.getPlayer().sendMessage(Utils.I18n("censorTarget"));
+					event.getPlayer().sendMessage(LocaleManager.I18n("censorTarget"));
 					event.getPlayer().setHealth(0);
-					Utils.broadcastMessage(Utils.I18n("censorBroadcast", replace));
+					Users.broadcastMessage(LocaleManager.I18n("censorBroadcast", replace));
 				}
 			}
 		}

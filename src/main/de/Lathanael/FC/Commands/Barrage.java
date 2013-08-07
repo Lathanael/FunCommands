@@ -27,14 +27,15 @@ import org.bukkit.entity.Player;
 import de.Lathanael.FC.FunCommands.FunCommands;
 import de.Lathanael.FC.Tools.Threads.BarrageTask;
 
+import be.Balor.Manager.LocaleManager;
 import be.Balor.Manager.Commands.CommandArgs;
 import be.Balor.Manager.Commands.CoreCommand;
 import be.Balor.Manager.Exceptions.PlayerNotFound;
-import be.Balor.Manager.Permissions.ActionNotPermitedException;
+import be.Balor.Manager.Exceptions.ActionNotPermitedException;
 import be.Balor.Manager.Permissions.PermChild;
 import be.Balor.Manager.Permissions.PermParent;
 import be.Balor.Manager.Permissions.PermissionManager;
-import be.Balor.Tools.Utils;
+import be.Balor.Tools.CommandUtils.Users;
 import be.Balor.bukkit.AdminCmd.ACPluginManager;
 
 /**
@@ -56,11 +57,11 @@ public class Barrage extends CoreCommand {
 	 */
 	@Override
 	public void execute(CommandSender sender, CommandArgs args) throws PlayerNotFound, ActionNotPermitedException {
-		final Player target = Utils.getUserParam(sender, args, permNode);
+		final Player target = Users.getUserParam(sender, args, permNode);
 		if (target == null)
 			return;
 		HashMap<String, String> replace = new HashMap<String, String>();
-		replace.put("target", Utils.getPlayerName(target));
+		replace.put("target", Users.getPlayerName(target));
 		if (args.getString(0).equalsIgnoreCase("arrow") && PermissionManager.hasPerm(sender, "fun.barrage.arrow")) {
 			final int id1 = ACPluginManager.getScheduler().scheduleSyncRepeatingTask(ACPluginManager.getPluginInstance("FunCommands"), new BarrageTask(target), 0L, 10L);
 			final int id2 = ACPluginManager.getScheduler().scheduleSyncRepeatingTask(ACPluginManager.getPluginInstance("FunCommands"), new Runnable() {
@@ -84,29 +85,29 @@ public class Barrage extends CoreCommand {
 				}
 			}, 300L);
 
-			if (Utils.isPlayer(sender, false))
-				replace.put("sender", Utils.getPlayerName((Player) sender));
+			if (Users.isPlayer(sender, false))
+				replace.put("sender", Users.getPlayerName((Player) sender));
 			else
 				replace.put("sender", "Server Admin");
 			if (!target.equals(sender)) {
-				Utils.sI18n(target, "arrowTarget", replace);
-				Utils.sI18n(sender, "arrowSender", replace);
+				LocaleManager.sI18n(target, "arrowTarget", replace);
+				LocaleManager.sI18n(sender, "arrowSender", replace);
 			} else {
-				Utils.sI18n(sender, "arrowYourself", replace);
+				LocaleManager.sI18n(sender, "arrowYourself", replace);
 			}
 		} else if (args.getString(0).equalsIgnoreCase("fire") && PermissionManager.hasPerm(sender, "fun.barrage.fire")) {
 			target.setFireTicks(100000);
 			FunCommands.onFire.add(target);
 
-			if (Utils.isPlayer(sender, false))
-				replace.put("sender", Utils.getPlayerName((Player) sender));
+			if (Users.isPlayer(sender, false))
+				replace.put("sender", Users.getPlayerName((Player) sender));
 			else
 				replace.put("sender", "Server Admin");
 			if (!target.equals(sender)) {
-				Utils.sI18n(target, "fireTarget", replace);
-				Utils.sI18n(sender, "fireSender", replace);
+				LocaleManager.sI18n(target, "fireTarget", replace);
+				LocaleManager.sI18n(sender, "fireSender", replace);
 			} else {
-				Utils.sI18n(sender, "fireYourself", replace);
+				LocaleManager.sI18n(sender, "fireYourself", replace);
 			}
 		}
 	}
@@ -130,6 +131,5 @@ public class Barrage extends CoreCommand {
 		plugin.getPermissionLinker().addChildPermParent(parent, new PermParent("fun.*"));
 		PermChild child = new PermChild(permNode, bukkitDefault);
 		parent.addChild(child).addChild(fire).addChild(arrow);
-		bukkitPerm = child.getBukkitPerm();
 	}
 }

@@ -18,18 +18,20 @@
 package de.Lathanael.FC.Commands;
 
 import java.util.HashMap;
+
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
-import de.Lathanael.FC.FunCommands.FCConfigEnum;
-import de.Lathanael.FC.FunCommands.FunCommands;
-
+import be.Balor.Manager.LocaleManager;
 import be.Balor.Manager.Commands.CommandArgs;
 import be.Balor.Manager.Commands.CoreCommand;
+import be.Balor.Manager.Exceptions.ActionNotPermitedException;
 import be.Balor.Manager.Exceptions.PlayerNotFound;
-import be.Balor.Manager.Permissions.ActionNotPermitedException;
-import be.Balor.Tools.Utils;
+import be.Balor.Tools.CommandUtils.Users;
+
+import de.Lathanael.FC.FunCommands.FCConfigEnum;
+import de.Lathanael.FC.FunCommands.FunCommands;
 
 /**
  * @author Lathanael (aka Philippe Leipold)
@@ -55,14 +57,14 @@ public class Rocket extends CoreCommand {
 	@Override
 	public void execute(CommandSender sender, CommandArgs args) throws PlayerNotFound, ActionNotPermitedException {
 		Player target;
-		target = Utils.getUser(sender, args, permNode, 0, true);
+		target = Users.getUser(sender, args, permNode, 0, true);
 		if (target == null)
 			return;
 		float power = 0;
 		HashMap<String, String> replace = new HashMap<String, String>();
-		replace.put("target", Utils.getPlayerName(target));
-		if (Utils.isPlayer(sender, false))
-			replace.put("sender", Utils.getPlayerName((Player) sender));
+		replace.put("target", Users.getPlayerName(target));
+		if (Users.isPlayer(sender, false))
+			replace.put("sender", Users.getPlayerName((Player) sender));
 		else
 			replace.put("sender", "Server Admin");
 		if (args.hasFlag('h')) {
@@ -83,11 +85,11 @@ public class Rocket extends CoreCommand {
 		}
 
 		if (!target.equals(sender)) {
-			Utils.sI18n(target, "rocketTarget", replace);
-			Utils.sI18n(sender, "rocketSender", replace);
+			LocaleManager.sI18n(target, "rocketTarget", replace);
+			LocaleManager.sI18n(sender, "rocketSender", replace);
 			return;
 		} else {
-			Utils.sI18n(sender, "rocketYourself");
+			LocaleManager.sI18n(sender, "rocketYourself");
 		}
 	}
 

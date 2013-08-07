@@ -43,10 +43,10 @@ import de.Lathanael.FC.Commands.Wound;
 import de.Lathanael.FC.Listeners.FCChatListener;
 import de.Lathanael.FC.Listeners.FCPlayerListener;
 import de.Lathanael.FC.Tools.BlocksOld;
+
 import be.Balor.Manager.LocaleManager;
 import be.Balor.Manager.Permissions.PermParent;
 import be.Balor.Player.ACPlayer;
-import be.Balor.Tools.Utils;
 import be.Balor.Tools.Configuration.File.ExtendedConfiguration;
 import be.Balor.Tools.Egg.EggTypeClassLoader;
 import be.Balor.bukkit.AdminCmd.ACPluginManager;
@@ -92,62 +92,62 @@ public class FunCommands extends AbstractAdminCmdPlugin {
 
 	@Override
 	protected void setDefaultLocale() {
-		Utils.addLocale("slapSender", ChatColor.DARK_AQUA + "You have slapped " + ChatColor.GOLD
+		LocaleManager.getInstance().addLocale("slapSender", ChatColor.DARK_AQUA + "You have slapped " + ChatColor.GOLD
 				+ "%target" + ChatColor.DARK_AQUA + "!");
-		Utils.addLocale("slapTarget", ChatColor.DARK_AQUA + "You have been slapped by " + ChatColor.GOLD
+		LocaleManager.getInstance().addLocale("slapTarget", ChatColor.DARK_AQUA + "You have been slapped by " + ChatColor.GOLD
 				+ "%sender" + ChatColor.DARK_AQUA + "!");
-		Utils.addLocale("slapYourself", ChatColor.DARK_AQUA + "You have slapped " + ChatColor.GOLD
+		LocaleManager.getInstance().addLocale("slapYourself", ChatColor.DARK_AQUA + "You have slapped " + ChatColor.GOLD
 				+ "yourself" + ChatColor.DARK_AQUA + "!");
-		Utils.addLocale("attaintYourself", ChatColor.DARK_AQUA + "You changed your Displayname to:" + ChatColor.DARK_RED
+		LocaleManager.getInstance().addLocale("attaintYourself", ChatColor.DARK_AQUA + "You changed your Displayname to:" + ChatColor.DARK_RED
 				+ " %name");
-		Utils.addLocale("attaintTarget", ChatColor.DARK_AQUA+  "Your Displayname has been changed by" + ChatColor.GOLD
+		LocaleManager.getInstance().addLocale("attaintTarget", ChatColor.DARK_AQUA+  "Your Displayname has been changed by" + ChatColor.GOLD
 				+ " %sender" + ChatColor.DARK_AQUA + " to:" + ChatColor.DARK_RED + "%name");
-		Utils.addLocale("attaintSender", ChatColor.DARK_AQUA + "You have changed the Displayname of" + ChatColor.GOLD
+		LocaleManager.getInstance().addLocale("attaintSender", ChatColor.DARK_AQUA + "You have changed the Displayname of" + ChatColor.GOLD
 				+ " %target" + ChatColor.DARK_AQUA + " to:" + ChatColor.DARK_RED +" %name");
-		Utils.addLocale("attaintShowName", ChatColor.DARK_AQUA + "The Displayname of " + ChatColor.GOLD + "%name"
+		LocaleManager.getInstance().addLocale("attaintShowName", ChatColor.DARK_AQUA + "The Displayname of " + ChatColor.GOLD + "%name"
 				+ ChatColor.DARK_AQUA + " is:" + ChatColor.DARK_RED	+ " %dname");
-		Utils.addLocale("attaintErrorDuplicateName", ChatColor.RED + "A player with the name " + ChatColor.GOLD
+		LocaleManager.getInstance().addLocale("attaintErrorDuplicateName", ChatColor.RED + "A player with the name " + ChatColor.GOLD
 				+ "%name" + ChatColor.RED + " is already online. Duplicate players are not possible.");
-		Utils.addLocale("entombSender", ChatColor.DARK_AQUA + "You have entombed " + ChatColor.GOLD
+		LocaleManager.getInstance().addLocale("entombSender", ChatColor.DARK_AQUA + "You have entombed " + ChatColor.GOLD
 				+ "%target" + ChatColor.DARK_AQUA + "!");
-		Utils.addLocale("entombTarget", ChatColor.DARK_AQUA + "You have been entombed by " + ChatColor.GOLD
+		LocaleManager.getInstance().addLocale("entombTarget", ChatColor.DARK_AQUA + "You have been entombed by " + ChatColor.GOLD
 				+ "%sender" + ChatColor.DARK_AQUA + "!");
-		Utils.addLocale("entombYourself", ChatColor.DARK_AQUA + "You have entombed yourself!");
-		Utils.addLocale("voidSender", ChatColor.DARK_AQUA + "You have dropped " + ChatColor.GOLD
+		LocaleManager.getInstance().addLocale("entombYourself", ChatColor.DARK_AQUA + "You have entombed yourself!");
+		LocaleManager.getInstance().addLocale("voidSender", ChatColor.DARK_AQUA + "You have dropped " + ChatColor.GOLD
 				+ "%target" + ChatColor.DARK_AQUA + " into the " + ChatColor.RED +"VOID" + ChatColor.DARK_AQUA + "!");
-		Utils.addLocale("voidTarget", ChatColor.DARK_AQUA + "You have been dropped into the " + ChatColor.RED + "VOID "
+		LocaleManager.getInstance().addLocale("voidTarget", ChatColor.DARK_AQUA + "You have been dropped into the " + ChatColor.RED + "VOID "
 				+ ChatColor.DARK_AQUA + "by " + ChatColor.GOLD + "%sender" + ChatColor.DARK_AQUA + "!");
-		Utils.addLocale("voidYourself", ChatColor.DARK_AQUA + "You have dropped yourself into the " + ChatColor.RED + "VOID"
+		LocaleManager.getInstance().addLocale("voidYourself", ChatColor.DARK_AQUA + "You have dropped yourself into the " + ChatColor.RED + "VOID"
 				+ ChatColor.DARK_AQUA + "!");
-		Utils.addLocale("rocketTarget", ChatColor.DARK_AQUA + "You have shot " + ChatColor.GOLD
+		LocaleManager.getInstance().addLocale("rocketTarget", ChatColor.DARK_AQUA + "You have shot " + ChatColor.GOLD
 				+ "%target" + ChatColor.DARK_AQUA + " high into the air!");
-		Utils.addLocale("rocketSender", ChatColor.DARK_AQUA + "You have been shot high into the air by " + ChatColor.GOLD
+		LocaleManager.getInstance().addLocale("rocketSender", ChatColor.DARK_AQUA + "You have been shot high into the air by " + ChatColor.GOLD
 				+ "%sender" + ChatColor.DARK_AQUA + "!");
-		Utils.addLocale("rocketYourself", ChatColor.DARK_AQUA + "You have shot yourself into the air!");
+		LocaleManager.getInstance().addLocale("rocketYourself", ChatColor.DARK_AQUA + "You have shot yourself into the air!");
 		LocaleManager.getInstance().save();
-		Utils.addLocale("sacrificeTarget", ChatColor.DARK_AQUA + "You have sacrificed " + ChatColor.GOLD
+		LocaleManager.getInstance().addLocale("sacrificeTarget", ChatColor.DARK_AQUA + "You have sacrificed " + ChatColor.GOLD
 				+ "%target" + ChatColor.DARK_AQUA + "!");
-		Utils.addLocale("sacrificeSender", ChatColor.DARK_AQUA + "You have been sacrificed by " + ChatColor.GOLD
+		LocaleManager.getInstance().addLocale("sacrificeSender", ChatColor.DARK_AQUA + "You have been sacrificed by " + ChatColor.GOLD
 				+ "%sender" + ChatColor.DARK_AQUA + "!");
-		Utils.addLocale("sacrificeYourself", ChatColor.DARK_AQUA + "You have sacrificed yourself!");
-		Utils.addLocale("censorTarget", ChatColor.RED + "Watch your language!");
-		Utils.addLocale("censorbroadcast", ChatColor.GOLD + "%player" + ChatColor.DARK_PURPLE
+		LocaleManager.getInstance().addLocale("sacrificeYourself", ChatColor.DARK_AQUA + "You have sacrificed yourself!");
+		LocaleManager.getInstance().addLocale("censorTarget", ChatColor.RED + "Watch your language!");
+		LocaleManager.getInstance().addLocale("censorbroadcast", ChatColor.GOLD + "%player" + ChatColor.DARK_PURPLE
 				+ " just got slayed because he used bad language!");
-		Utils.addLocale("arrowTarget", ChatColor.DARK_AQUA + "You have shot " + ChatColor.GOLD
+		LocaleManager.getInstance().addLocale("arrowTarget", ChatColor.DARK_AQUA + "You have shot " + ChatColor.GOLD
 				+ "%target" + ChatColor.DARK_AQUA + " to death!");
-		Utils.addLocale("arrowSender", ChatColor.DARK_AQUA + "You have been shot to death by " + ChatColor.GOLD
+		LocaleManager.getInstance().addLocale("arrowSender", ChatColor.DARK_AQUA + "You have been shot to death by " + ChatColor.GOLD
 				+ "%sender" + ChatColor.DARK_AQUA + "!");
-		Utils.addLocale("arrowYourself", ChatColor.DARK_AQUA + "You have shot yourself to death!");
-		Utils.addLocale("fireTarget", ChatColor.DARK_AQUA + "You have set " + ChatColor.GOLD
+		LocaleManager.getInstance().addLocale("arrowYourself", ChatColor.DARK_AQUA + "You have shot yourself to death!");
+		LocaleManager.getInstance().addLocale("fireTarget", ChatColor.DARK_AQUA + "You have set " + ChatColor.GOLD
 				+ "%target" + ChatColor.DARK_AQUA + " on fire till he dies!");
-		Utils.addLocale("fireSender", ChatColor.DARK_AQUA + "You have been set on by " + ChatColor.GOLD
+		LocaleManager.getInstance().addLocale("fireSender", ChatColor.DARK_AQUA + "You have been set on by " + ChatColor.GOLD
 				+ "%sender" + ChatColor.DARK_AQUA + " until you die!");
-		Utils.addLocale("fireYourself", ChatColor.DARK_AQUA + "You set yourself on fire until you die!");
-		Utils.addLocale("woundTarget", ChatColor.DARK_AQUA + "You have wounded " + ChatColor.GOLD
+		LocaleManager.getInstance().addLocale("fireYourself", ChatColor.DARK_AQUA + "You set yourself on fire until you die!");
+		LocaleManager.getInstance().addLocale("woundTarget", ChatColor.DARK_AQUA + "You have wounded " + ChatColor.GOLD
 				+ "%target" + ChatColor.DARK_AQUA + "!");
-		Utils.addLocale("woundSender", ChatColor.DARK_AQUA + "You have been wounded by " + ChatColor.GOLD
+		LocaleManager.getInstance().addLocale("woundSender", ChatColor.DARK_AQUA + "You have been wounded by " + ChatColor.GOLD
 				+ "%sender" + ChatColor.DARK_AQUA + "!");
-		Utils.addLocale("woundYourself", ChatColor.DARK_AQUA + "You wounded yourself!");
+		LocaleManager.getInstance().addLocale("woundYourself", ChatColor.DARK_AQUA + "You wounded yourself!");
 		LocaleManager.getInstance().save();
 	}
 

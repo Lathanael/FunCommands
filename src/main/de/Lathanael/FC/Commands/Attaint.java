@@ -21,18 +21,20 @@ import java.util.HashMap;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.permissions.PermissionDefault;
 
 import de.Lathanael.FC.FunCommands.FunCommands;
 import de.Lathanael.FC.Tools.Utilities;
 
+import be.Balor.Manager.LocaleManager;
 import be.Balor.Manager.Commands.CommandArgs;
 import be.Balor.Manager.Commands.CoreCommand;
 import be.Balor.Manager.Exceptions.PlayerNotFound;
-import be.Balor.Manager.Permissions.ActionNotPermitedException;
+import be.Balor.Manager.Exceptions.ActionNotPermitedException;
 import be.Balor.Manager.Permissions.PermissionManager;
 import be.Balor.Player.ACPlayer;
 import be.Balor.Tools.Type;
-import be.Balor.Tools.Utils;
+import be.Balor.Tools.CommandUtils.Users;
 import be.Balor.bukkit.AdminCmd.ACPluginManager;
 
 /**
@@ -69,12 +71,12 @@ public class Attaint extends CoreCommand {
 		for (Player p : ACPluginManager.getServer().getOnlinePlayers()) {
 			if (p.getName().equals(name)) {
 				replace.put("name", name);
-				Utils.sI18n(sender, "attaintErrorDuplicateName", replace);
+				LocaleManager.sI18n(sender, "attaintErrorDuplicateName", replace);
 				return;
 			}
 		}
 		newArgs = new CommandArgs(name);
-		target = Utils.getUser(sender, newArgs, permNode, 0, true);
+		target = Users.getUser(sender, newArgs, permNode, 0, true);
 		final ACPlayer acTarget = ACPlayer.getPlayer(target);
 		if (target == null)
 			return;
@@ -84,7 +86,7 @@ public class Attaint extends CoreCommand {
 				return;
 			replace.put("dname", target.getDisplayName());
 			replace.put("name", target.getName());
-			Utils.sI18n(sender, "attaintShowName", replace);
+			LocaleManager.sI18n(sender, "attaintShowName", replace);
 			return;
 		}
 		if (FunCommands.players.containsKey(args.getString(0)))
@@ -97,8 +99,8 @@ public class Attaint extends CoreCommand {
 		FunCommands.players.put(args.getString(1), target);
 		replace.put("target", target.getName());
 		replace.put("name", args.getString(1));
-		if (Utils.isPlayer(sender, false))
-			replace.put("sender", Utils.getPlayerName((Player) sender));
+		if (Users.isPlayer(sender, false))
+			replace.put("sender", Users.getPlayerName((Player) sender));
 		else
 			replace.put("sender", "Server Admin");
 
@@ -110,10 +112,10 @@ public class Attaint extends CoreCommand {
 		}
 
 		if (!target.equals(sender)) {
-			Utils.sI18n(target, "attaintTarget", replace);
-			Utils.sI18n(sender, "attaintSender", replace);
+			LocaleManager.sI18n(target, "attaintTarget", replace);
+			LocaleManager.sI18n(sender, "attaintSender", replace);
 		} else {
-			Utils.sI18n(sender, "attaintYourself", replace);
+			LocaleManager.sI18n(sender, "attaintYourself", replace);
 		}
 	}
 
@@ -132,7 +134,7 @@ public class Attaint extends CoreCommand {
 	 */
 	@Override
 	public void registerBukkitPerm() {
-		plugin.getPermissionLinker().addPermChild("fun.attaint.check");
+		plugin.getPermissionLinker().addPermChild("fun.attaint.check", PermissionDefault.OP);
 		super.registerBukkitPerm();
 	}
 }
